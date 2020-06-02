@@ -12,8 +12,6 @@ namespace AutoTestRunner.Worker
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
-        
         private readonly ICommandLineService _commandLineService;
         private readonly IMessageParser _messageParser;
         private readonly IWindowsNotificationService _windowsNotificationService;
@@ -21,8 +19,7 @@ namespace AutoTestRunner.Worker
         private readonly MemoryCache _memoryCache;
         private readonly string[] _paths;
         private readonly List<CustomFileWatcher> _fileWatchers;
-        public Worker(ILogger<Worker> logger,
-                      ICommandLineService commandLineService,
+        public Worker(ICommandLineService commandLineService,
                       IMessageParser messageParser,
                       IWindowsNotificationService windowsNotificationService)
         {
@@ -31,7 +28,6 @@ namespace AutoTestRunner.Worker
             _windowsNotificationService = windowsNotificationService;
             _messageParser = messageParser;
             _commandLineService = commandLineService;
-            _logger = logger;
 
             _paths = new[]
             {
