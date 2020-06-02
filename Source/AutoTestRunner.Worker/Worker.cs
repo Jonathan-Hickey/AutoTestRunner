@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AutoTestRunner.Services;
 using AutoTestRunner.Services.Interfaces;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace AutoTestRunner.Worker
 {
