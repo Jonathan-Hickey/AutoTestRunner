@@ -1,4 +1,5 @@
-using System;
+using System.IO;
+using System.Runtime.Caching;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoTestRunner.Services;
@@ -14,26 +15,43 @@ namespace AutoTestRunner.Worker
         private readonly ICommandLineService _commandLineService;
         private readonly IMessageParser _messageParser;
         private readonly IWindowsNotificationService _windowsNotificationService;
+        private readonly IHostingEnvironment _env;
+        private readonly MemoryCache _memoryCache;
 
-        public Worker(ILogger<Worker> logger,
+        public Worker(IHostingEnvironment env, 
+                      ILogger<Worker> logger,
                       ICommandLineService commandLineService,
                       IMessageParser messageParser,
                       IWindowsNotificationService windowsNotificationService)
         {
+            _env = env;
+
+            _memoryCache = MemoryCache.Default;
             _windowsNotificationService = windowsNotificationService;
             _messageParser = messageParser;
             _commandLineService = commandLineService;
             _logger = logger;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        private CustomFileWatcher _fileWatcher;
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
+            var path = "C:\\Users\\Jonathan\\source\\repos\\TestProjectUsedByAutoTestRunner\\TestProjectUsedByAutoTestRunner\\obj\\Debug\\netcoreapp3.1";
 
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
-            }
+            _fileWatcher = new CustomFileWatcher(_memoryCache, path);
+            _fileWatcher.OnDllChanged = RunDllTests;
+
+            return Task.CompletedTask;
+        }
+
+        private void RunDllTests(FileSystemEventArgs e)
+        {
+            var fullPathWithFileNameRemoved = e.FullPath.Substring(0,e.FullPath.Length - e.Name.Length);
+            var projectPath = Path.Combine(fullPathWithFileNameRemoved, "..", "..", "..");
+
+            var testResultMessage = _commandLineService.RunTestProject(projectPath);
+            var messageResult = _messageParser.GetTestResult(testResultMessage);
+            _windowsNotificationService.Push(messageResult);
         }
     }
 }

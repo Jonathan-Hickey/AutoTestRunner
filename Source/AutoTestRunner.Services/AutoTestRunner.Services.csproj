@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />
+    <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

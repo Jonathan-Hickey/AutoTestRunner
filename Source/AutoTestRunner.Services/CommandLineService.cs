@@ -7,13 +7,38 @@ namespace AutoTestRunner.Services
     public interface ICommandLineService
     {
         Task<string> RunTestProjectAsync(string projectPath);
+        string RunTestProject(string projectPath);
     }
 
     public class CommandLineService : ICommandLineService
     {
         private static string cmdProgramName = "cmd.exe";
 
-        public Task<string> RunTestProjectAsync(string projectPath)
+        public async Task<string> RunTestProjectAsync(string projectPath)
+        {
+            var info = CreateProcessStartInfo(projectPath);
+
+            using (var process = Process.Start(info))
+            {
+                StreamReader reader = process.StandardOutput;
+
+                return await reader.ReadToEndAsync();
+            }
+        }
+
+        public string RunTestProject(string projectPath)
+        {
+            var info = CreateProcessStartInfo(projectPath);
+
+            using (var process = Process.Start(info))
+            {
+                StreamReader reader = process.StandardOutput;
+
+                return reader.ReadToEnd();
+            }
+        }
+
+        private static ProcessStartInfo CreateProcessStartInfo(string projectPath)
         {
             ProcessStartInfo info = new ProcessStartInfo(cmdProgramName);
 
@@ -24,14 +49,9 @@ namespace AutoTestRunner.Services
             info.RedirectStandardOutput = true;
             info.RedirectStandardError = true;
 
-            info.Arguments = $"/c cd {projectPath} & dotnet test"; ;
-
-            using (var process = Process.Start(info))
-            {
-                StreamReader reader = process.StandardOutput;
-
-                return reader.ReadToEndAsync();
-            }
+            info.Arguments = $"/c cd {projectPath} & dotnet test";
+            
+            return info;
         }
     }
 }
