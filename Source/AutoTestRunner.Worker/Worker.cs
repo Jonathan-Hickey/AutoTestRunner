@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Caching;
 using System.Threading;
@@ -12,35 +13,47 @@ namespace AutoTestRunner.Worker
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
+        
         private readonly ICommandLineService _commandLineService;
         private readonly IMessageParser _messageParser;
         private readonly IWindowsNotificationService _windowsNotificationService;
-        private readonly IHostingEnvironment _env;
+        
         private readonly MemoryCache _memoryCache;
-
-        public Worker(IHostingEnvironment env, 
-                      ILogger<Worker> logger,
+        private readonly string[] _paths;
+        private readonly List<CustomFileWatcher> _fileWatchers;
+        public Worker(ILogger<Worker> logger,
                       ICommandLineService commandLineService,
                       IMessageParser messageParser,
                       IWindowsNotificationService windowsNotificationService)
         {
-            _env = env;
 
             _memoryCache = MemoryCache.Default;
             _windowsNotificationService = windowsNotificationService;
             _messageParser = messageParser;
             _commandLineService = commandLineService;
             _logger = logger;
+
+            _paths = new[]
+            {
+                "C:\\Users\\Jonathan\\source\\repos\\TestProjectUsedByAutoTestRunner\\TestProjectUsedByAutoTestRunner\\obj\\Debug\\netcoreapp3.1",
+                "C:\\Users\\Jonathan\\source\\repos\\TestProjectUsedByAutoTestRunner\\NUnitTestProject2\\obj\\Debug\\netcoreapp3.1"
+            };
+
+            _fileWatchers = new List<CustomFileWatcher>();
         }
 
-        private CustomFileWatcher _fileWatcher;
+        
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var path = "C:\\Users\\Jonathan\\source\\repos\\TestProjectUsedByAutoTestRunner\\TestProjectUsedByAutoTestRunner\\obj\\Debug\\netcoreapp3.1";
 
-            _fileWatcher = new CustomFileWatcher(_memoryCache, path);
-            _fileWatcher.OnDllChanged = RunDllTests;
+            foreach (var path in _paths)
+            {
+                var fileWatcher = new CustomFileWatcher(_memoryCache, path);
+                fileWatcher.OnDllChanged = RunDllTests;
 
+                _fileWatchers.Add(fileWatcher);
+            }
+            
             return Task.CompletedTask;
         }
 
