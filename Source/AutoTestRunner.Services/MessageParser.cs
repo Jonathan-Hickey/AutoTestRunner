@@ -25,10 +25,10 @@ namespace AutoTestRunner.Services
         public TestResult GetTestResult(string testResultMessage)
         {
             
-            var totalTests = GetIntValue(_totalTestsRegex, testResultMessage, TotalTests.Length);
-            var passedTests = GetIntValue(_passedTestsRegex, testResultMessage, PassedTests.Length);
-            var failedTests = GetIntValue(_failedTestsRegex, testResultMessage, FailedTests.Length);
-            var ignoredTests = GetIntValue(_ignoredTestsRegex, testResultMessage, IgnoredTests.Length);
+            var totalTests = GetNullableIntValue(_totalTestsRegex, testResultMessage, TotalTests.Length);
+            var passedTests = GetNullableIntValue(_passedTestsRegex, testResultMessage, PassedTests.Length);
+            var failedTests = GetNullableIntValue(_failedTestsRegex, testResultMessage, FailedTests.Length);
+            var ignoredTests = GetNullableIntValue(_ignoredTestsRegex, testResultMessage, IgnoredTests.Length);
             var projectName = GetStringValue(_projectNameRegex, testResultMessage);
             var timeTaken = GetDecimalValue(_totalTimeTakenRegex, testResultMessage, TotalTimeTaken.Length);
             
@@ -43,10 +43,15 @@ namespace AutoTestRunner.Services
             };
         }
 
-        private int GetIntValue(Regex regex, string testResultMessage, int substringStartIndex)
+        private int? GetNullableIntValue(Regex regex, string testResultMessage, int substringStartIndex)
         {
-            var totalTests = regex.Match(testResultMessage);
-            return int.Parse(totalTests.Value.Substring(substringStartIndex));
+            var intValue = regex.Match(testResultMessage);
+            if (intValue.Success)
+            {
+                return int.Parse(intValue.Value.Substring(substringStartIndex));
+            }
+
+            return default(int?);
         }
 
         private string GetStringValue(Regex regex, string testResultMessage)
@@ -61,6 +66,5 @@ namespace AutoTestRunner.Services
             var totalTests = regex.Match(testResultMessage);
             return decimal.Parse(totalTests.Value.Substring(substringStartIndex));
         }
-
     }
 }

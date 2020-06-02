@@ -14,10 +14,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoTestRunner.Services\AutoTestRunner.Services.csproj" />
+    <ProjectReference Include="..\..\Source\AutoTestRunner.Services\AutoTestRunner.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestData\Failed_Message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Failed_Ignored_Message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Ignored_Message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Passed_Ignored_Message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Passed_Message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Passed_Failed_Message.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\Passed_Failed_Ignored_Message.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
