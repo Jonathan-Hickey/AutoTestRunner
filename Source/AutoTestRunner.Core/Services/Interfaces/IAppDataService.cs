@@ -2,6 +2,9 @@
 {
     public interface IAppDataService
     {
+        string GetProjectWatcherFileName();
+        string GetProjectWatcherFilePath();
         string GetAutoTestRunnerDataFolderPath();
+
     }
 }

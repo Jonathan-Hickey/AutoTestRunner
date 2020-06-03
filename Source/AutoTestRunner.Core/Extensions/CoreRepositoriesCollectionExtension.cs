@@ -9,12 +9,9 @@ namespace AutoTestRunner.Core.Extensions
     {
         public static IServiceCollection AddCoreRepositories(this IServiceCollection serviceCollection)
         {
-
             serviceCollection.AddSingleton<IFileRepository, FileRepository>(f => 
-                new FileRepository(f.GetService<IAppDataService>().GetAutoTestRunnerDataFolderPath()));
+                new FileRepository(f.GetService<IAppDataService>().GetProjectWatcherFilePath()));
             return serviceCollection;
         }
-
-       
     }
 }

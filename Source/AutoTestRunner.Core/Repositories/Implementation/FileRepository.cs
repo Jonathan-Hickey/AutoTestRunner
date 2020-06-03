@@ -14,13 +14,7 @@ namespace AutoTestRunner.Core.Repositories.Implementation
         public readonly string _filePath;
         public FileRepository(string filePath)
         {
-            _filePath = Path.Combine(filePath, "ProjectWatcher.json");
-
-            if (!File.Exists(_filePath))
-            {
-                var fileStream = File.Create(_filePath);
-                fileStream.Close();
-            }
+            _filePath = filePath;
         }
         
         public async Task<ProjectWatcher> AddProjectWatcherAsync(string fullPath)
@@ -35,7 +29,7 @@ namespace AutoTestRunner.Core.Repositories.Implementation
             
             fileContents.Add(JsonSerializer.Serialize(newestProjectWatcher));
 
-            WriteToFileAsync(_filePath, fileContents);
+            await WriteToFileAsync(_filePath, fileContents);
 
             return newestProjectWatcher;
         }
@@ -45,6 +39,13 @@ namespace AutoTestRunner.Core.Repositories.Implementation
             var fileContents = await ReadFileAsync(_filePath);
 
             return fileContents.Select( f => JsonSerializer.Deserialize<ProjectWatcher>(f)).ToList();
+        }
+
+        public IReadOnlyList<ProjectWatcher> GetProjectWatchers()
+        {
+            var fileContents = ReadFile(_filePath);
+
+            return fileContents.Select(f => JsonSerializer.Deserialize<ProjectWatcher>(f)).ToList();
         }
 
         private async Task<List<string>> ReadFileAsync(string fileName)
@@ -58,6 +59,26 @@ namespace AutoTestRunner.Core.Repositories.Implementation
                     string line;
 
                     while ((line = await sr.ReadLineAsync()) != null)
+                    {
+                        fileContents.Add(line);
+                    }
+
+                    return fileContents;
+                }
+            }
+        }
+
+        private List<string> ReadFile(string fileName)
+        {
+            var fileContents = new List<string>();
+
+            using (var fileStream = File.OpenRead(fileName))
+            {
+                using (var sr = new StreamReader(fileStream))
+                {
+                    string line;
+
+                    while ((line = sr.ReadLine()) != null)
                     {
                         fileContents.Add(line);
                     }

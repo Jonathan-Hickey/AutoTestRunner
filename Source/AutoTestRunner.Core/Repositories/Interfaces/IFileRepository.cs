@@ -8,5 +8,6 @@ namespace AutoTestRunner.Core.Repositories.Interfaces
     {
         Task<ProjectWatcher> AddProjectWatcherAsync(string fullPath);
         Task<IReadOnlyList<ProjectWatcher>> GetProjectWatchersAsync();
+        IReadOnlyList<ProjectWatcher> GetProjectWatchers();
     }
 }

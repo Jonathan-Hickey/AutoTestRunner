@@ -3,11 +3,32 @@ using System.IO;
 using AutoTestRunner.Core.Services.Interfaces;
 
 namespace AutoTestRunner.Core.Services.Implementation
-
 {
     public class AppDataService : IAppDataService
     {
         private static readonly string _autoTestRunnerData = "AutoTestRunnerData";
+
+        private static readonly string _projectWatcherFileName = "ProjectWatcher.json";
+
+        public string GetProjectWatcherFileName()
+        {
+            return _projectWatcherFileName;
+        }
+
+        public string GetProjectWatcherFilePath()
+        {
+            var projectWatcherFilePath = Path.Combine(GetAutoTestRunnerDataFolderPath(), _projectWatcherFileName);
+            
+            if(!File.Exists(projectWatcherFilePath))
+            {
+                var fileStream = File.Create(projectWatcherFilePath);
+                fileStream.Close();
+            }
+
+            return projectWatcherFilePath;
+        }
+
+
         public string GetAutoTestRunnerDataFolderPath()
         {
             string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);

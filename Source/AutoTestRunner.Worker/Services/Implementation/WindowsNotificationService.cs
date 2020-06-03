@@ -1,10 +1,9 @@
 ﻿using System;
 using Windows.UI.Notifications;
-using AutoTestRunner.Worker.Interfaces;
 using AutoTestRunner.Worker.Models;
 using AutoTestRunner.Worker.Services.Interfaces;
 
-namespace AutoTestRunner.Worker.Services
+namespace AutoTestRunner.Worker.Services.Implementation
 {
     public class WindowsNotificationService : IWindowsNotificationService
     {

@@ -11,8 +11,10 @@ namespace AutoTestRunner.Worker.Services.Implementation
 
         private readonly CacheItemPolicy _cacheItemPolicy;
         private const int CacheTimeMilliseconds = 500;
-        private static readonly string _filter = "*.dll";
-        public CustomFileWatcher(MemoryCache memoryCache, string path)
+
+        private readonly Guid _customFileWatcherId;
+
+        public CustomFileWatcher(MemoryCache memoryCache, string path, string filter)
         {
             _memCache = memoryCache;
             _cacheItemPolicy = new CacheItemPolicy()
@@ -20,13 +22,20 @@ namespace AutoTestRunner.Worker.Services.Implementation
                 RemovedCallback = OnRemovedFromCache
             };
 
-            _fileSystemWatcher = new FileSystemWatcher(path, _filter);
+            _customFileWatcherId = Guid.NewGuid();
+            
+            _fileSystemWatcher = new FileSystemWatcher(path, filter);
             _fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite;
             _fileSystemWatcher.Changed += OnFileWatcherOnChange;
             _fileSystemWatcher.EnableRaisingEvents = true;
         }
 
         public Action<FileSystemEventArgs> OnChange;
+
+        public void Dispose()
+        {
+            _fileSystemWatcher.Dispose();
+        }
 
         private void OnRemovedFromCache(CacheEntryRemovedArguments args)
         {
@@ -40,7 +49,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
         private void OnFileWatcherOnChange(object sender, FileSystemEventArgs e)
         {
             _cacheItemPolicy.AbsoluteExpiration = DateTimeOffset.Now.AddMilliseconds(CacheTimeMilliseconds);
-            _memCache.AddOrGetExisting(e.Name, e, _cacheItemPolicy);
+            _memCache.AddOrGetExisting($"{_customFileWatcherId}_{e.Name}", e, _cacheItemPolicy);
         }
     }
 }
