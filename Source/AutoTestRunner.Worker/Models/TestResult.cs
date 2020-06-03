@@ -1,4 +1,4 @@
-﻿namespace AutoTestRunner.Services.Models
+﻿namespace AutoTestRunner.Worker.Models
 {
     public class TestResult
     {

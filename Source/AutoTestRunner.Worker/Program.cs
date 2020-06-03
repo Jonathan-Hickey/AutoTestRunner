@@ -1,5 +1,5 @@
-using AutoTestRunner.Services;
-using AutoTestRunner.Services.Interfaces;
+using AutoTestRunner.Core.Extensions;
+using AutoTestRunner.Worker.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -17,10 +17,11 @@ namespace AutoTestRunner.Worker
                 .UseWindowsService()
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton<IWindowsNotificationService, WindowsNotificationService>();
-                    services.AddSingleton<IMessageParser, MessageParser>();
-                    services.AddSingleton<ICommandLineService, CommandLineService>();
-
+                    services.AddCoreServices();
+                    services.AddCoreRepositories();
+                    
+                    services.AddServices();
+                    
                     services.AddHostedService<Worker>();
                 });
     }

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.Caching;
 
-namespace AutoTestRunner.Services
+namespace AutoTestRunner.Worker.Services.Implementation
 {
     public class CustomFileWatcher 
     {
@@ -22,11 +22,11 @@ namespace AutoTestRunner.Services
 
             _fileSystemWatcher = new FileSystemWatcher(path, _filter);
             _fileSystemWatcher.NotifyFilter = NotifyFilters.LastWrite;
-            _fileSystemWatcher.Changed += OnChange;
+            _fileSystemWatcher.Changed += OnFileWatcherOnChange;
             _fileSystemWatcher.EnableRaisingEvents = true;
         }
 
-        public Action<FileSystemEventArgs> OnDllChanged;
+        public Action<FileSystemEventArgs> OnChange;
 
         private void OnRemovedFromCache(CacheEntryRemovedArguments args)
         {
@@ -34,10 +34,10 @@ namespace AutoTestRunner.Services
 
             var e = (FileSystemEventArgs)args.CacheItem.Value;
 
-            OnDllChanged.Invoke(e);
+            OnChange.Invoke(e);
         }
 
-        private void OnChange(object sender, FileSystemEventArgs e)
+        private void OnFileWatcherOnChange(object sender, FileSystemEventArgs e)
         {
             _cacheItemPolicy.AbsoluteExpiration = DateTimeOffset.Now.AddMilliseconds(CacheTimeMilliseconds);
             _memCache.AddOrGetExisting(e.Name, e, _cacheItemPolicy);

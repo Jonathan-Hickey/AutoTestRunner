@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoTestRunner.Api.Models;
+using AutoTestRunner.Core.Models;
 
-namespace AutoTestRunner.Api.Services
+namespace AutoTestRunner.Core.Services.Interfaces
 {
     public interface IProjectWatcherService
     {

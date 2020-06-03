@@ -1,15 +1,10 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using AutoTestRunner.Worker.Interfaces;
 
-namespace AutoTestRunner.Services
+namespace AutoTestRunner.Worker.Services.Implementation
 {
-    public interface ICommandLineService
-    {
-        Task<string> RunTestProjectAsync(string projectPath);
-        string RunTestProject(string projectPath);
-    }
-
     public class CommandLineService : ICommandLineService
     {
         private static string cmdProgramName = "cmd.exe";

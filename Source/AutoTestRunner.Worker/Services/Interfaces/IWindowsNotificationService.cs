@@ -1,6 +1,6 @@
-﻿using AutoTestRunner.Services.Models;
+﻿using AutoTestRunner.Worker.Models;
 
-namespace AutoTestRunner.Services.Interfaces
+namespace AutoTestRunner.Worker.Services.Interfaces
 {
     public interface IWindowsNotificationService
     {

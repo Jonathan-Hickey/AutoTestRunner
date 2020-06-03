@@ -3,8 +3,10 @@ using System.IO;
 using System.Runtime.Caching;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoTestRunner.Services;
-using AutoTestRunner.Services.Interfaces;
+using AutoTestRunner.Core.Services.Interfaces;
+using AutoTestRunner.Worker.Interfaces;
+using AutoTestRunner.Worker.Services.Implementation;
+using AutoTestRunner.Worker.Services.Interfaces;
 using Microsoft.Extensions.Hosting;
 
 namespace AutoTestRunner.Worker
@@ -18,10 +20,14 @@ namespace AutoTestRunner.Worker
         private readonly MemoryCache _memoryCache;
         private readonly string[] _paths;
         private readonly List<CustomFileWatcher> _fileWatchers;
+        private readonly IAppDataService _appDataService;
+
         public Worker(ICommandLineService commandLineService,
                       IMessageParser messageParser,
-                      IWindowsNotificationService windowsNotificationService)
+                      IWindowsNotificationService windowsNotificationService,
+                      IAppDataService appDataService)
         {
+            _appDataService = appDataService;
 
             _memoryCache = MemoryCache.Default;
             _windowsNotificationService = windowsNotificationService;
@@ -44,7 +50,7 @@ namespace AutoTestRunner.Worker
             foreach (var path in _paths)
             {
                 var fileWatcher = new CustomFileWatcher(_memoryCache, path);
-                fileWatcher.OnDllChanged = RunDllTests;
+                fileWatcher.OnChange = RunDllTests;
 
                 _fileWatchers.Add(fileWatcher);
             }

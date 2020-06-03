@@ -14,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\AutoTestRunner.Services\AutoTestRunner.Services.csproj" />
+    <ProjectReference Include="..\..\Source\AutoTestRunner.Core\AutoTestRunner.Core.csproj" />
+    <ProjectReference Include="..\..\Source\AutoTestRunner.Worker\AutoTestRunner.Worker.csproj" />
   </ItemGroup>
 
   <ItemGroup>

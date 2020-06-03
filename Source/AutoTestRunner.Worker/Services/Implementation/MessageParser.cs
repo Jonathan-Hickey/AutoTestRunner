@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using AutoTestRunner.Services.Interfaces;
-using AutoTestRunner.Services.Models;
+﻿using System.Text.RegularExpressions;
+using AutoTestRunner.Worker.Interfaces;
+using AutoTestRunner.Worker.Models;
+using AutoTestRunner.Worker.Services.Interfaces;
 
-namespace AutoTestRunner.Services
+namespace AutoTestRunner.Worker.Services.Implementation
 {
     public class MessageParser : IMessageParser
     {
