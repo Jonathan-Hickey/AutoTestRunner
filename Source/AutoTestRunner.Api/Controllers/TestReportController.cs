@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoTestRunner.Api.Dtos.RequestModels;
-using AutoTestRunner.Api.Factory.Implementation;
+﻿using AutoTestRunner.Api.Dtos.RequestModels;
 using AutoTestRunner.Api.Factory.Interfaces;
 using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace AutoTestRunner.Api.Controllers
 {
@@ -36,7 +35,7 @@ namespace AutoTestRunner.Api.Controllers
 
             await _testReportService.CreateTestReportAsync(testReport);
 
-            return Created("","");
+            return Created("", "");
         }
 
         [HttpGet]
@@ -45,7 +44,7 @@ namespace AutoTestRunner.Api.Controllers
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(GetTestResultReport)}");
             var projectTestReports = await _testReportService.GetTestReportsAsync(projectWatcherId);
-            
+
             return Ok(projectTestReports);
         }
 

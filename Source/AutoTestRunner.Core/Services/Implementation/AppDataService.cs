@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AutoTestRunner.Core.Services.Interfaces;
+using System;
 using System.IO;
-using AutoTestRunner.Core.Services.Interfaces;
 
 namespace AutoTestRunner.Core.Services.Implementation
 {
@@ -19,8 +19,8 @@ namespace AutoTestRunner.Core.Services.Implementation
         public string GetProjectWatcherFilePath()
         {
             var projectWatcherFilePath = Path.Combine(GetAutoTestRunnerDataFolderPath(), _projectWatcherFileName);
-            
-            if(!File.Exists(projectWatcherFilePath))
+
+            if (!File.Exists(projectWatcherFilePath))
             {
                 var fileStream = File.Create(projectWatcherFilePath);
                 fileStream.Close();

@@ -1,3 +1,12 @@
+using AutoTestRunner.Core.Models;
+using AutoTestRunner.Core.Repositories.Interfaces;
+using AutoTestRunner.Core.Services.Interfaces;
+using AutoTestRunner.Worker.Clients.Implementation;
+using AutoTestRunner.Worker.Interfaces;
+using AutoTestRunner.Worker.Services.Implementation;
+using AutoTestRunner.Worker.Services.Interfaces;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,14 +14,6 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoTestRunner.Core.Models;
-using AutoTestRunner.Core.Repositories.Interfaces;
-using AutoTestRunner.Core.Services.Interfaces;
-using AutoTestRunner.Worker.Interfaces;
-using AutoTestRunner.Worker.Services.Implementation;
-using AutoTestRunner.Worker.Services.Interfaces;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace AutoTestRunner.Worker
 {
@@ -21,23 +22,27 @@ namespace AutoTestRunner.Worker
         private readonly ICommandLineService _commandLineService;
         private readonly IMessageParser _messageParser;
         private readonly IWindowsNotificationService _windowsNotificationService;
-        
+
         private readonly MemoryCache _memoryCache;
-        private readonly IDictionary<Guid,CustomFileWatcher> _fileWatcherLookUp;
+        private readonly IDictionary<Guid, CustomFileWatcher> _fileWatcherLookUp;
         private readonly IFileRepository<ProjectWatcher> _fileRepository;
         private readonly IAppDataService _appDataService;
         private readonly ILogger<Worker> _logger;
-        private readonly Guid _myApplicationId; 
+
+        private readonly IAutoTestRunnerClient _autoTestRunnerClient;
 
         private static readonly string _filter = "*.dll";
+
 
         public Worker(ICommandLineService commandLineService,
                       IMessageParser messageParser,
                       IWindowsNotificationService windowsNotificationService,
                       IFileRepository<ProjectWatcher> fileRepository,
                       IAppDataService appDataService,
+                      IAutoTestRunnerClient autoTestRunnerClient,
                       ILogger<Worker> logger)
         {
+            _autoTestRunnerClient = autoTestRunnerClient;
             _logger = logger;
             _appDataService = appDataService;
             _fileRepository = fileRepository;
@@ -46,11 +51,10 @@ namespace AutoTestRunner.Worker
             _windowsNotificationService = windowsNotificationService;
             _messageParser = messageParser;
             _commandLineService = commandLineService;
-            _myApplicationId = Guid.NewGuid();
             _fileWatcherLookUp = new Dictionary<Guid, CustomFileWatcher>();
         }
 
-        
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var projectsToWatch = await _fileRepository.GetAllAsync();
@@ -60,30 +64,35 @@ namespace AutoTestRunner.Worker
                 WatchProject(project);
             }
 
-            var projectWatcherFileWatcher = new CustomFileWatcher(_memoryCache, _appDataService.GetAutoTestRunnerDataFolderPath(), _appDataService.GetProjectWatcherFileName());
+            var myApplicationId = Guid.NewGuid();
+
+            var projectWatcherFileWatcher = new CustomFileWatcher(_memoryCache, myApplicationId, _appDataService.GetAutoTestRunnerDataFolderPath(), _appDataService.GetProjectWatcherFileName());
             projectWatcherFileWatcher.OnChange = WatchNewProject;
-            _fileWatcherLookUp.Add(_myApplicationId, projectWatcherFileWatcher);
+            _fileWatcherLookUp.Add(myApplicationId, projectWatcherFileWatcher);
         }
 
         private void WatchProject(ProjectWatcher project)
         {
-            var fileWatcher = new CustomFileWatcher(_memoryCache, project.FullProjectPath, _filter);
+            var fileWatcher = new CustomFileWatcher(_memoryCache, project.ProjectWatcherId, project.FullProjectPath, _filter);
             fileWatcher.OnChange = RunDllTests;
             _fileWatcherLookUp.Add(project.ProjectWatcherId, fileWatcher);
         }
 
-        private void RunDllTests(FileSystemEventArgs e)
+        private void RunDllTests(Guid projectWatcherId, FileSystemEventArgs e)
         {
             _logger.LogInformation($"Running Dll {e.Name}");
-            var fullPathWithFileNameRemoved = e.FullPath.Substring(0,e.FullPath.Length - e.Name.Length);
+            var fullPathWithFileNameRemoved = e.FullPath.Substring(0, e.FullPath.Length - e.Name.Length);
             var projectPath = Path.Combine(fullPathWithFileNameRemoved, "..", "..", "..");
 
             var testResultMessage = _commandLineService.RunTestProject(projectPath);
             var messageResult = _messageParser.GetTestResult(testResultMessage);
+
+            _autoTestRunnerClient.CreateTestReport(projectWatcherId, messageResult);
+
             _windowsNotificationService.Push(messageResult);
         }
 
-        private void WatchNewProject(FileSystemEventArgs e)
+        private void WatchNewProject(Guid myApplicationId, FileSystemEventArgs e)
         {
             var projectsToWatch = _fileRepository.GetAll();
 
@@ -100,7 +109,7 @@ namespace AutoTestRunner.Worker
             foreach (var customFileWatcher in _fileWatcherLookUp)
             {
                 if (projectsToWatch.All(p => p.ProjectWatcherId != customFileWatcher.Key)
-                    && _myApplicationId != customFileWatcher.Key)
+                    && myApplicationId != customFileWatcher.Key)
                 {
                     projectsToStopWatching.Add(customFileWatcher.Key);
                 }

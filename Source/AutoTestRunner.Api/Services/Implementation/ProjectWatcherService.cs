@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoTestRunner.Api.Services.Interfaces;
+﻿using AutoTestRunner.Api.Services.Interfaces;
 using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Repositories.Interfaces;
-using AutoTestRunner.Core.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AutoTestRunner.Api.Services.Implementation
 {
@@ -25,8 +24,8 @@ namespace AutoTestRunner.Api.Services.Implementation
                 FullProjectPath = fullPath
             };
 
-            await  _fileRepository.WriteAsync(newestProjectWatcher);
-            
+            await _fileRepository.WriteAsync(newestProjectWatcher);
+
             return newestProjectWatcher;
         }
 

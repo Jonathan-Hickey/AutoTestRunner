@@ -1,7 +1,7 @@
-﻿using System;
-using Windows.UI.Notifications;
-using AutoTestRunner.Worker.Models;
+﻿using AutoTestRunner.Worker.Models;
 using AutoTestRunner.Worker.Services.Interfaces;
+using System;
+using Windows.UI.Notifications;
 
 namespace AutoTestRunner.Worker.Services.Implementation
 {

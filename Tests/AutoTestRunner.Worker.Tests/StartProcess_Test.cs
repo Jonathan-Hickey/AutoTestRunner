@@ -1,6 +1,5 @@
-using System;
-using System.Diagnostics;
 using NUnit.Framework;
+using System.Diagnostics;
 
 namespace AutoTestRunner.Worker.Tests
 {

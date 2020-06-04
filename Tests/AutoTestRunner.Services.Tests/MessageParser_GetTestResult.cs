@@ -18,7 +18,7 @@ namespace AutoTestRunner.Services.Tests
             var messageParser = new MessageParser();
 
             var testResult = messageParser.GetTestResult(testResultMessage);
-            
+
             var expectedResult = new TestResult
             {
                 TotalNumberOfTests = 3,

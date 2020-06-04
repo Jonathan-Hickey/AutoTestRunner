@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AutoTestRunner.Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoTestRunner.Core.Models;
 
 namespace AutoTestRunner.Api.Services.Interfaces
 {

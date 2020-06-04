@@ -1,10 +1,10 @@
-﻿using System;
+﻿using AutoTestRunner.Api.Models;
+using AutoTestRunner.Api.Services.Interfaces;
+using AutoTestRunner.Core.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoTestRunner.Api.Models;
-using AutoTestRunner.Api.Services.Interfaces;
-using AutoTestRunner.Core.Repositories.Interfaces;
 
 namespace AutoTestRunner.Api.Services.Implementation
 {
@@ -35,5 +35,5 @@ namespace AutoTestRunner.Api.Services.Implementation
         }
     }
 
-    
+
 }

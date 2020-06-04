@@ -9,7 +9,7 @@ namespace AutoTestRunner.Core.Extensions
         public static IServiceCollection AddCore(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IAppDataService, AppDataService>();
-            
+
             return serviceCollection;
         }
     }

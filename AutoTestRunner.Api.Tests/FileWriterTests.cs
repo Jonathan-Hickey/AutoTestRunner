@@ -1,6 +1,6 @@
-﻿using System.IO;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using System.IO;
 
 namespace AutoTestRunner.Api.Tests
 {
@@ -14,7 +14,7 @@ namespace AutoTestRunner.Api.Tests
         {
             var fileName = "MyTestFile.json";
             var filePathToWatch = "{\"filePath\": \"C:\\Users\\Jonathan\\source\\repos\\TestProjectUsedByAutoTestRunner\\TestProjectUsedByAutoTestRunner\\obj\\Debug\\netcoreapp3.1\"}";
-            
+
             //WriteToFile(fileName, new List<string> { filePathToWatch });
 
             File.Exists(fileName).Should().BeTrue();
@@ -35,7 +35,7 @@ namespace AutoTestRunner.Api.Tests
         }
 
         [Test]
-        
+
         public void Read_And_Write_File_Test()
         {
             var fileName = "MyTestFile.json";

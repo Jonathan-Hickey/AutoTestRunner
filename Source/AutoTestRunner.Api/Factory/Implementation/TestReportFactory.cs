@@ -1,11 +1,11 @@
-﻿using System;
-using AutoTestRunner.Api.Dtos.RequestModels;
+﻿using AutoTestRunner.Api.Dtos.RequestModels;
 using AutoTestRunner.Api.Factory.Interfaces;
 using AutoTestRunner.Api.Models;
+using System;
 
 namespace AutoTestRunner.Api.Factory.Implementation
 {
-    public class TestReportFactory : ITestReportFactory 
+    public class TestReportFactory : ITestReportFactory
     {
         public TestReport CreateTestReport(Guid projectWatcherId, CreateTestReportDto request)
         {

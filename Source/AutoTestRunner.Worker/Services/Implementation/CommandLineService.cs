@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
+﻿using AutoTestRunner.Worker.Interfaces;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using AutoTestRunner.Worker.Interfaces;
 
 namespace AutoTestRunner.Worker.Services.Implementation
 {
@@ -45,7 +45,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             info.RedirectStandardError = true;
 
             info.Arguments = $"/c cd {projectPath} & dotnet test";
-            
+
             return info;
         }
     }

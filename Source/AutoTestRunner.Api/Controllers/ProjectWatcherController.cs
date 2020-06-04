@@ -1,9 +1,9 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using AutoTestRunner.Api.Dtos.RequestModels;
+﻿using AutoTestRunner.Api.Dtos.RequestModels;
 using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace AutoTestRunner.Api.Controllers
 {
@@ -14,7 +14,7 @@ namespace AutoTestRunner.Api.Controllers
         private readonly ILogger<ProjectWatcherController> _logger;
         private readonly IProjectWatcherService _projectWatcherService;
         private readonly string _dataStorePath;
-        public ProjectWatcherController(ILogger<ProjectWatcherController> logger, IProjectWatcherService projectWatcherService )
+        public ProjectWatcherController(ILogger<ProjectWatcherController> logger, IProjectWatcherService projectWatcherService)
         {
             _projectWatcherService = projectWatcherService;
             _logger = logger;
@@ -28,7 +28,7 @@ namespace AutoTestRunner.Api.Controllers
         {
 
             _logger.LogInformation(_dataStorePath);
-            
+
             var projectWatcher = await _projectWatcherService.AddProjectToWatcherAsync(createProjectWatcherDto.FullProjectPath);
             return Created("", "");
         }

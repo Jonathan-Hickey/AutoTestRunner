@@ -1,6 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using AutoTestRunner.Worker.Models;
+﻿using AutoTestRunner.Worker.Models;
 using AutoTestRunner.Worker.Services.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace AutoTestRunner.Worker.Services.Implementation
 {
@@ -10,27 +10,27 @@ namespace AutoTestRunner.Worker.Services.Implementation
         private const string PassedTests = "Passed: ";
         private const string FailedTests = "Failed: ";
         private const string IgnoredTests = "Skipped: ";
-        private const string TotalTimeTaken  = "Total time: ";
+        private const string TotalTimeTaken = "Total time: ";
 
         private readonly Regex _totalTestsRegex = new Regex($"{TotalTests}\\d*", RegexOptions.Compiled);
         private readonly Regex _passedTestsRegex = new Regex($"{PassedTests}\\d*", RegexOptions.Compiled);
         private readonly Regex _failedTestsRegex = new Regex($"{FailedTests}\\d*", RegexOptions.Compiled);
-        
+
         private readonly Regex _ignoredTestsRegex = new Regex($"{IgnoredTests}\\d*", RegexOptions.Compiled);
         private readonly Regex _totalTimeTakenRegex = new Regex($"{TotalTimeTaken}\\d*.\\d*", RegexOptions.Compiled);
         private readonly Regex _projectNameRegex = new Regex("\\w*.dll", RegexOptions.Compiled);
 
-        
+
         public TestResult GetTestResult(string testResultMessage)
         {
-            
+
             var totalTests = GetNullableIntValue(_totalTestsRegex, testResultMessage, TotalTests.Length);
             var passedTests = GetNullableIntValue(_passedTestsRegex, testResultMessage, PassedTests.Length);
             var failedTests = GetNullableIntValue(_failedTestsRegex, testResultMessage, FailedTests.Length);
             var ignoredTests = GetNullableIntValue(_ignoredTestsRegex, testResultMessage, IgnoredTests.Length);
             var projectName = GetStringValue(_projectNameRegex, testResultMessage);
             var timeTaken = GetDecimalValue(_totalTimeTakenRegex, testResultMessage, TotalTimeTaken.Length);
-            
+
             return new TestResult
             {
                 ProjectName = projectName,
