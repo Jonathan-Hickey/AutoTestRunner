@@ -25,7 +25,7 @@ namespace AutoTestRunner.Worker.Clients.Implementation
 
         public void CreateTestReport(Guid projectWatcherId, TestResult testResult)
         {
-            var responseMessage = _httpClient.Post($"https://localhost:5001/TestReport/{projectWatcherId}", testResult);
+            var responseMessage = _httpClient.Post($"https://localhost:5001/ProjectWatcher/{projectWatcherId}/TestReports", testResult);
 
             if (responseMessage.IsSuccessStatusCode)
             {

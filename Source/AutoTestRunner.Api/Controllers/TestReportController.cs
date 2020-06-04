@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 namespace AutoTestRunner.Api.Controllers
 {
     [ApiController]
-    [Route("TestReport")]
+    [Route("ProjectWatcher/{projectWatcherId}/TestReports")]
     public class TestReportController : ControllerBase
     {
         private readonly ILogger<TestReportController> _logger;
         private readonly ITestReportService _testReportService;
         private readonly ITestReportFactory _testReportFactory;
-
 
         public TestReportController(ILogger<TestReportController> logger,
                                     ITestReportService testReportService,
@@ -27,7 +26,7 @@ namespace AutoTestRunner.Api.Controllers
         }
 
         [HttpPost]
-        [Route("{projectWatcherId}")]
+        [Route("")]
         public async Task<IActionResult> AddTestResultReportAsync(Guid projectWatcherId, CreateTestReportDto testReportDto)
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(AddTestResultReportAsync)}");
@@ -39,7 +38,7 @@ namespace AutoTestRunner.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{projectWatcherId}")]
+        [Route("")]
         public async Task<IActionResult> GetTestResultReport(Guid projectWatcherId)
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(GetTestResultReport)}");
@@ -48,15 +47,13 @@ namespace AutoTestRunner.Api.Controllers
             return Ok(projectTestReports);
         }
 
-
         [HttpGet]
-        [Route("{projectWatcherId}/{reportId}")]
+        [Route("{reportId}")]
         public async Task<IActionResult> GetTestResultReport(Guid projectWatcherId, Guid reportId)
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(GetTestResultReport)}");
             var testReport = await _testReportService.GetTestReportAsync(projectWatcherId, reportId);
             return Ok(testReport);
         }
-
     }
 }
