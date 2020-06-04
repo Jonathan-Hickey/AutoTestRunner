@@ -1,3 +1,4 @@
+using AutoTestRunner.Api.Extensions;
 using AutoTestRunner.Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,9 +19,13 @@ namespace AutoTestRunner.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCore();
+
+            services.AddServices();
+            services.AddRepositories();
+            services.AddFactories();
+
             services.AddControllers();
-            services.AddCoreRepositories();
-            services.AddCoreServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,8 @@
-﻿namespace AutoTestRunner.Worker.Models
+﻿using System.Collections.Generic;
+
+namespace AutoTestRunner.Api.Dtos.RequestModels
 {
-    public class TestResult
+    public class CreateTestReportDto
     {
         public string ProjectName { get; set; }
         public int? NumberOfPassedTests { get; set; }
@@ -8,10 +10,7 @@
         public int? NumberOfIgnoredTests { get; set; }
         public int? TotalNumberOfTests { get; set; }
         public decimal TimeTakenInSecond { get; set; }
-
-        public override string ToString()
-        {
-            return $"ProjectName: {ProjectName}, Passed : {NumberOfPassedTests}, Failed: {NumberOfFailedTests}, Ignored: {NumberOfIgnoredTests}, Time Taken In Seconds : {TimeTakenInSecond}";
-        }
+        public IReadOnlyList<string> FailedTests { get; set; }
+        public IReadOnlyList<string> IgnoredTests { get; set; }
     }
 }

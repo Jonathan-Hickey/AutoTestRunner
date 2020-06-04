@@ -4,6 +4,8 @@
     {
         string GetProjectWatcherFileName();
         string GetProjectWatcherFilePath();
+        string GetTestReportFilePath();
+
         string GetAutoTestRunnerDataFolderPath();
 
     }

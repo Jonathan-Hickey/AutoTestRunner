@@ -24,7 +24,7 @@ namespace AutoTestRunner.Worker
         
         private readonly MemoryCache _memoryCache;
         private readonly IDictionary<Guid,CustomFileWatcher> _fileWatcherLookUp;
-        private readonly IFileRepository _fileRepository;
+        private readonly IFileRepository<ProjectWatcher> _fileRepository;
         private readonly IAppDataService _appDataService;
         private readonly ILogger<Worker> _logger;
         private readonly Guid _myApplicationId; 
@@ -34,7 +34,7 @@ namespace AutoTestRunner.Worker
         public Worker(ICommandLineService commandLineService,
                       IMessageParser messageParser,
                       IWindowsNotificationService windowsNotificationService,
-                      IFileRepository fileRepository,
+                      IFileRepository<ProjectWatcher> fileRepository,
                       IAppDataService appDataService,
                       ILogger<Worker> logger)
         {
@@ -53,7 +53,7 @@ namespace AutoTestRunner.Worker
         
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var projectsToWatch = await _fileRepository.GetProjectWatchersAsync();
+            var projectsToWatch = await _fileRepository.GetAllAsync();
 
             foreach (var project in projectsToWatch)
             {
@@ -85,7 +85,7 @@ namespace AutoTestRunner.Worker
 
         private void WatchNewProject(FileSystemEventArgs e)
         {
-            var projectsToWatch = _fileRepository.GetProjectWatchers();
+            var projectsToWatch = _fileRepository.GetAll();
 
             foreach (var project in projectsToWatch)
             {

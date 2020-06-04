@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoTestRunner.Core.Models;
 
 namespace AutoTestRunner.Core.Repositories.Interfaces
 {
-    public interface IFileRepository
+    public interface IFileRepository<T>
     {
-        Task<ProjectWatcher> AddProjectWatcherAsync(string fullPath);
-        Task<IReadOnlyList<ProjectWatcher>> GetProjectWatchersAsync();
-        IReadOnlyList<ProjectWatcher> GetProjectWatchers();
+        Task WriteAsync(T obj);
+        Task<IReadOnlyList<T>> GetAllAsync();
+        IReadOnlyList<T> GetAll();
     }
 }

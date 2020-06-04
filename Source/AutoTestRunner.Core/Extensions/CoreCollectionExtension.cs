@@ -4,12 +4,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoTestRunner.Core.Extensions
 {
-    public static class CoreServiceCollectionExtension
+    public static class CoreCollectionExtension
     {
-        public static IServiceCollection AddCoreServices(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddCore(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IAppDataService, AppDataService>();
-            serviceCollection.AddSingleton<IProjectWatcherService, ProjectWatcherService>();
+            
             return serviceCollection;
         }
     }

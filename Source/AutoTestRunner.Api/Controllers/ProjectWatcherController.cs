@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
-using AutoTestRunner.Core.Services.Interfaces;
+using AutoTestRunner.Api.Dtos.RequestModels;
+using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

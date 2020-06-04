@@ -1,5 +1,4 @@
 ﻿using AutoTestRunner.Worker.Interfaces;
-using AutoTestRunner.Worker.Services;
 using AutoTestRunner.Worker.Services.Implementation;
 using AutoTestRunner.Worker.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

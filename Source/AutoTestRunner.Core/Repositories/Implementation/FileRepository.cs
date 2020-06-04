@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Repositories.Interfaces;
 
 namespace AutoTestRunner.Core.Repositories.Implementation
 {
-    public class FileRepository : IFileRepository
+    public class FileRepository<T> : IFileRepository<T>
     {
         public readonly string _filePath;
         public FileRepository(string filePath)
@@ -17,35 +15,29 @@ namespace AutoTestRunner.Core.Repositories.Implementation
             _filePath = filePath;
         }
         
-        public async Task<ProjectWatcher> AddProjectWatcherAsync(string fullPath)
+        public async Task WriteAsync(T obj)
         {
-            var newestProjectWatcher = new ProjectWatcher
-            {
-                ProjectWatcherId = Guid.NewGuid(),
-                FullProjectPath = fullPath
-            };
 
             var fileContents = await ReadFileAsync(_filePath);
             
-            fileContents.Add(JsonSerializer.Serialize(newestProjectWatcher));
+            fileContents.Add(JsonSerializer.Serialize(obj));
 
             await WriteToFileAsync(_filePath, fileContents);
 
-            return newestProjectWatcher;
         }
 
-        public async Task<IReadOnlyList<ProjectWatcher>> GetProjectWatchersAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             var fileContents = await ReadFileAsync(_filePath);
 
-            return fileContents.Select( f => JsonSerializer.Deserialize<ProjectWatcher>(f)).ToList();
+            return fileContents.Select( f => JsonSerializer.Deserialize<T>(f)).ToList();
         }
 
-        public IReadOnlyList<ProjectWatcher> GetProjectWatchers()
+        public IReadOnlyList<T> GetAll()
         {
             var fileContents = ReadFile(_filePath);
 
-            return fileContents.Select(f => JsonSerializer.Deserialize<ProjectWatcher>(f)).ToList();
+            return fileContents.Select(f => JsonSerializer.Deserialize<T>(f)).ToList();
         }
 
         private async Task<List<string>> ReadFileAsync(string fileName)
