@@ -11,6 +11,8 @@ namespace AutoTestRunner.Worker.Extensions
             serviceCollection.AddSingleton<IWindowsNotificationService, WindowsNotificationService>();
             serviceCollection.AddSingleton<IMessageParser, MessageParser>();
             serviceCollection.AddSingleton<ICommandLineService, CommandLineService>();
+            serviceCollection.AddSingleton<ITestRunnerService, TestRunnerService>();
+
             return serviceCollection;
         }
     }
