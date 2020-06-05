@@ -12,6 +12,7 @@ namespace AutoTestRunner.Worker.Extensions
             serviceCollection.AddSingleton<IMessageParser, MessageParser>();
             serviceCollection.AddSingleton<ICommandLineService, CommandLineService>();
             serviceCollection.AddSingleton<ITestRunnerService, TestRunnerService>();
+            serviceCollection.AddSingleton<IFileWatcherService, FileWatcherService>();
 
             return serviceCollection;
         }
