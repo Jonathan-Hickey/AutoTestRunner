@@ -9,8 +9,7 @@ namespace AutoTestRunner.Core.Repositories.Implementation
 {
     public class FileRepository<T> : IFileRepository<T>
     {
-        public readonly string _filePath;
-
+        private readonly string _filePath;
         private readonly Semaphore _semaphore;
         private readonly IJsonService _jsonService;
 

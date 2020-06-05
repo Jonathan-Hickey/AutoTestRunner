@@ -1,10 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace AutoTestRunner.Worker.Interfaces
+﻿namespace AutoTestRunner.Worker.Services.Interfaces
 {
     public interface ICommandLineService
     {
-        Task<string> RunTestProjectAsync(string projectPath);
         string RunTestProject(string projectPath);
     }
 }

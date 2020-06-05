@@ -7,7 +7,6 @@ namespace AutoTestRunner.Core.Services.Implementation
     public class AppDataService : IAppDataService
     {
         private static readonly string _autoTestRunnerData = "AutoTestRunnerData";
-
         private static readonly string _projectWatcherFileName = "ProjectWatcher.json";
         private static readonly string _testResultsFileName = "TestResults.json";
 
@@ -41,8 +40,7 @@ namespace AutoTestRunner.Core.Services.Implementation
 
             return testResultsFilePath;
         }
-
-
+        
         public string GetAutoTestRunnerDataFolderPath()
         {
             string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);

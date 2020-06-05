@@ -1,25 +1,12 @@
-﻿using AutoTestRunner.Worker.Interfaces;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
+using AutoTestRunner.Worker.Services.Interfaces;
 
 namespace AutoTestRunner.Worker.Services.Implementation
 {
     public class CommandLineService : ICommandLineService
     {
         private static string cmdProgramName = "cmd.exe";
-
-        public async Task<string> RunTestProjectAsync(string projectPath)
-        {
-            var info = CreateProcessStartInfo(projectPath);
-
-            using (var process = Process.Start(info))
-            {
-                StreamReader reader = process.StandardOutput;
-
-                return await reader.ReadToEndAsync();
-            }
-        }
 
         public string RunTestProject(string projectPath)
         {

@@ -4,9 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Text.Json;
 using Windows.UI.Notifications;
-using AutoTestRunner.Worker.Clients.Implementation;
 using AutoTestRunner.Worker.Helpers;
-using Microsoft.Extensions.Logging;
 
 namespace AutoTestRunner.Worker.Services.Implementation
 {
@@ -14,11 +12,9 @@ namespace AutoTestRunner.Worker.Services.Implementation
     {
         private readonly ToastNotifier _toastNotifier;
         private static  readonly string Launch = "launch";
-        private readonly ILogger<WindowsNotificationService> _logger;
 
-        public WindowsNotificationService(ILogger<WindowsNotificationService> logger)
+        public WindowsNotificationService()
         {
-            _logger = logger;
             _toastNotifier = ToastNotificationManager.CreateToastNotifier("AutoTestRunner");
         }
 
@@ -48,7 +44,6 @@ namespace AutoTestRunner.Worker.Services.Implementation
             notification.Activated += NotificationActivated;
             
             _toastNotifier.Show(notification);
-
         }
 
         private void NotificationActivated(ToastNotification notification, object args)

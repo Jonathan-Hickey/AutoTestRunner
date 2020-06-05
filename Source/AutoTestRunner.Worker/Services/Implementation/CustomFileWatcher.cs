@@ -8,13 +8,11 @@ namespace AutoTestRunner.Worker.Services.Implementation
     {
         private readonly FileSystemWatcher _fileSystemWatcher;
         private readonly MemoryCache _memCache;
-
         private readonly CacheItemPolicy _cacheItemPolicy;
         private readonly Guid _id;
 
         private const int CacheTimeMilliseconds = 500;
-
-
+        
         public CustomFileWatcher(MemoryCache memoryCache, Guid id, string path, string filter)
         {
             _id = id;

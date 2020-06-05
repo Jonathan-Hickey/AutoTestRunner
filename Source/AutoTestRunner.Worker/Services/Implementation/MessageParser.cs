@@ -58,8 +58,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             var totalTests = regex.Match(testResultMessage);
             return totalTests.Value;
         }
-
-
+        
         private decimal GetDecimalValue(Regex regex, string testResultMessage, int substringStartIndex)
         {
             var totalTests = regex.Match(testResultMessage);
