@@ -1,4 +1,4 @@
-﻿namespace AutoTestRunner.Api.Dtos.RequestModels
+﻿namespace AutoTestRunner.Core.Models.Requests
 {
     public class CreateProjectWatcherDto
     {

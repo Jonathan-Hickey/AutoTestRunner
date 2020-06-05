@@ -22,110 +22,105 @@ namespace AutoTestRunner.Core.Repositories.Implementation
 
         public async Task WriteAsync(T obj)
         {
+            try
+            {
+                _semaphore.WaitOne();
 
-            var fileContents = await ReadFileAsync(_filePath);
+                var fileContents = await ReadFileAsync(_filePath);
 
-            fileContents.Add(JsonSerializer.Serialize(obj));
+                fileContents.Add(JsonSerializer.Serialize(obj));
 
-            await WriteToFileAsync(_filePath, fileContents);
+                await WriteToFileAsync(_filePath, fileContents);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
 
         }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            var fileContents = await ReadFileAsync(_filePath);
+            try
+            {
+                _semaphore.WaitOne();
+                var fileContents = await ReadFileAsync(_filePath);
 
-            return fileContents.Select(f => JsonSerializer.Deserialize<T>(f)).ToList();
+                return fileContents.Select(f => JsonSerializer.Deserialize<T>(f)).ToList();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public IReadOnlyList<T> GetAll()
         {
-            var fileContents = ReadFile(_filePath);
+            try
+            {
+                _semaphore.WaitOne();
+                var fileContents = ReadFile(_filePath);
 
-            return fileContents.Select(f => JsonSerializer.Deserialize<T>(f)).ToList();
+                return fileContents.Select(f => JsonSerializer.Deserialize<T>(f)).ToList();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         private async Task<List<string>> ReadFileAsync(string fileName)
         {
-            try
+            var fileContents = new List<string>();
+
+            using (var fileStream = File.OpenRead(fileName))
             {
-                _semaphore.WaitOne();
-
-                var fileContents = new List<string>();
-
-                using (var fileStream = File.OpenRead(fileName))
+                using (var sr = new StreamReader(fileStream))
                 {
-                    using (var sr = new StreamReader(fileStream))
+                    string line;
+
+                    while ((line = await sr.ReadLineAsync()) != null)
                     {
-                        string line;
-
-                        while ((line = await sr.ReadLineAsync()) != null)
-                        {
-                            fileContents.Add(line);
-                        }
-
-                        return fileContents;
+                        fileContents.Add(line);
                     }
+
+                    return fileContents;
                 }
             }
-            finally
-            {
-                _semaphore.Release();
-            }
-
         }
 
         private List<string> ReadFile(string fileName)
         {
-            try
+            var fileContents = new List<string>();
+
+            using (var fileStream = File.OpenRead(fileName))
             {
-                _semaphore.WaitOne();
-
-                var fileContents = new List<string>();
-
-                using (var fileStream = File.OpenRead(fileName))
+                using (var sr = new StreamReader(fileStream))
                 {
-                    using (var sr = new StreamReader(fileStream))
+                    string line;
+
+                    while ((line = sr.ReadLine()) != null)
                     {
-                        string line;
-
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            fileContents.Add(line);
-                        }
-
-                        return fileContents;
+                        fileContents.Add(line);
                     }
+
+                    return fileContents;
                 }
-            }
-            finally
-            {
-                _semaphore.Release();
             }
         }
 
         private async Task WriteToFileAsync(string filePath, List<string> filePathsToWatch)
         {
-            try
+            using (var fileStream = File.OpenWrite(filePath))
             {
-                _semaphore.WaitOne();
-
-                using (var fileStream = File.OpenWrite(filePath))
+                using (var streamWrite = new StreamWriter(fileStream))
                 {
-                    using (var streamWrite = new StreamWriter(fileStream))
+                    foreach (var filePathToWatch in filePathsToWatch)
                     {
-                        foreach (var filePathToWatch in filePathsToWatch)
-                        {
-                            await streamWrite.WriteLineAsync(filePathToWatch);
-                        }
+                        await streamWrite.WriteLineAsync(filePathToWatch);
                     }
                 }
             }
-            finally
-            {
-                _semaphore.Release();
-            }
-
         }
     }
 }

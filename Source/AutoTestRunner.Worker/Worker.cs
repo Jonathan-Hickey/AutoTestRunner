@@ -87,9 +87,9 @@ namespace AutoTestRunner.Worker
             var testResultMessage = _commandLineService.RunTestProject(projectPath);
             var messageResult = _messageParser.GetTestResult(testResultMessage);
 
-            _autoTestRunnerClient.CreateTestReport(projectWatcherId, messageResult);
+            var reportId = _autoTestRunnerClient.CreateTestReport(projectWatcherId, messageResult);
 
-            _windowsNotificationService.Push(messageResult);
+            _windowsNotificationService.Push(projectWatcherId: projectWatcherId, reportId: reportId, messageResult);
         }
 
         private void WatchNewProject(Guid myApplicationId, FileSystemEventArgs e)

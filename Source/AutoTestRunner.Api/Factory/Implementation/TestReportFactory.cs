@@ -1,7 +1,7 @@
-﻿using AutoTestRunner.Api.Dtos.RequestModels;
-using AutoTestRunner.Api.Factory.Interfaces;
+﻿using AutoTestRunner.Api.Factory.Interfaces;
 using AutoTestRunner.Api.Models;
 using System;
+using AutoTestRunner.Core.Models.Requests;
 
 namespace AutoTestRunner.Api.Factory.Implementation
 {

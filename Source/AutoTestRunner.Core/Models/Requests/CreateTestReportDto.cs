@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AutoTestRunner.Api.Dtos.RequestModels
+namespace AutoTestRunner.Core.Models.Requests
 {
     public class CreateTestReportDto
     {

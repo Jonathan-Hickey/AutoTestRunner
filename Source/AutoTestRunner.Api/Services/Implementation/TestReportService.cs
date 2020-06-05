@@ -17,9 +17,9 @@ namespace AutoTestRunner.Api.Services.Implementation
             _testReportRepository = testReportRepository;
         }
 
-        public Task CreateTestReportAsync(TestReport testReport)
+        public async Task CreateTestReportAsync(TestReport testReport)
         {
-            return _testReportRepository.WriteAsync(testReport);
+            await _testReportRepository.WriteAsync(testReport);
         }
 
         public Task<TestReport> GetTestReportAsync(Guid projectWatcherId, Guid reportId)

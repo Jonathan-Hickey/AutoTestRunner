@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\ResponseModels\" />
+    <Folder Include="Dtos\" />
     <Folder Include="Mappers\" />
   </ItemGroup>
 

@@ -1,10 +1,11 @@
-﻿using AutoTestRunner.Api.Dtos.RequestModels;
-using AutoTestRunner.Api.Factory.Interfaces;
+﻿using AutoTestRunner.Api.Factory.Interfaces;
 using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using AutoTestRunner.Core.Models.Requests;
+using AutoTestRunner.Core.Models.Response;
 
 namespace AutoTestRunner.Api.Controllers
 {
@@ -34,7 +35,10 @@ namespace AutoTestRunner.Api.Controllers
 
             await _testReportService.CreateTestReportAsync(testReport);
 
-            return Created("", "");
+            return Created("", new CreateTestReportResponseDto
+            {
+                ReportId = testReport.ReportId
+            });
         }
 
         [HttpGet]
