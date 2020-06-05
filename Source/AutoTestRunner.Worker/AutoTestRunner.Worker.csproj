@@ -17,8 +17,4 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoTestRunner.Core\AutoTestRunner.Core.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Clients\Interfaces\" />
-  </ItemGroup>
 </Project>

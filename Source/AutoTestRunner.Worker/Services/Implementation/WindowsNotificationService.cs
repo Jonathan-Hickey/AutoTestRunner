@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using Windows.UI.Notifications;
 using AutoTestRunner.Worker.Clients.Implementation;
+using AutoTestRunner.Worker.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace AutoTestRunner.Worker.Services.Implementation

@@ -12,10 +12,10 @@ namespace AutoTestRunner.Api.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IFileRepository<ProjectWatcher>, FileRepository<ProjectWatcher>>(f =>
-                new FileRepository<ProjectWatcher>(f.GetService<IAppDataService>().GetProjectWatcherFilePath()));
+                new FileRepository<ProjectWatcher>(f.GetService<IAppDataService>().GetProjectWatcherFilePath(), f.GetService<IJsonService>()));
 
             serviceCollection.AddSingleton<IFileRepository<TestReport>, FileRepository<TestReport>>(f =>
-                new FileRepository<TestReport>(f.GetService<IAppDataService>().GetTestReportFilePath()));
+                new FileRepository<TestReport>(f.GetService<IAppDataService>().GetTestReportFilePath(), f.GetService<IJsonService>()));
 
 
             return serviceCollection;

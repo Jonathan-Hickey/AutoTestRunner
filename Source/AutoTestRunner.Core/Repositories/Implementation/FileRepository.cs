@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,9 +12,11 @@ namespace AutoTestRunner.Core.Repositories.Implementation
         public readonly string _filePath;
 
         private readonly Semaphore _semaphore;
+        private readonly IJsonService _jsonService;
 
-        public FileRepository(string filePath)
+        public FileRepository(string filePath, IJsonService jsonService)
         {
+            _jsonService = jsonService;
             _filePath = filePath;
             _semaphore = new Semaphore(1, 1);
         }
@@ -28,7 +29,7 @@ namespace AutoTestRunner.Core.Repositories.Implementation
 
                 var fileContents = await ReadFileAsync(_filePath);
 
-                fileContents.Add(JsonSerializer.Serialize(obj));
+                fileContents.Add(_jsonService.Serialize(obj));
 
                 await WriteToFileAsync(_filePath, fileContents);
             }
@@ -46,7 +47,7 @@ namespace AutoTestRunner.Core.Repositories.Implementation
                 _semaphore.WaitOne();
                 var fileContents = await ReadFileAsync(_filePath);
 
-                return fileContents.Select(f => JsonSerializer.Deserialize<T>(f)).ToList();
+                return fileContents.Select(f => _jsonService.Deserialize<T>(f)).ToList();
             }
             finally
             {
@@ -61,7 +62,7 @@ namespace AutoTestRunner.Core.Repositories.Implementation
                 _semaphore.WaitOne();
                 var fileContents = ReadFile(_filePath);
 
-                return fileContents.Select(f => JsonSerializer.Deserialize<T>(f)).ToList();
+                return fileContents.Select(f => _jsonService.Deserialize<T>(f)).ToList();
             }
             finally
             {

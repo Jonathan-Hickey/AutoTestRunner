@@ -1,7 +1,6 @@
 using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Repositories.Interfaces;
 using AutoTestRunner.Core.Services.Interfaces;
-using AutoTestRunner.Worker.Clients.Implementation;
 using AutoTestRunner.Worker.Interfaces;
 using AutoTestRunner.Worker.Services.Implementation;
 using AutoTestRunner.Worker.Services.Interfaces;
@@ -14,6 +13,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoTestRunner.Worker.Clients.Interfaces;
 
 namespace AutoTestRunner.Worker
 {
@@ -32,8 +32,7 @@ namespace AutoTestRunner.Worker
         private readonly IAutoTestRunnerClient _autoTestRunnerClient;
 
         private static readonly string _filter = "*.dll";
-
-
+        
         public Worker(ICommandLineService commandLineService,
                       IMessageParser messageParser,
                       IWindowsNotificationService windowsNotificationService,
@@ -53,7 +52,6 @@ namespace AutoTestRunner.Worker
             _commandLineService = commandLineService;
             _fileWatcherLookUp = new Dictionary<Guid, CustomFileWatcher>();
         }
-
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -87,6 +85,7 @@ namespace AutoTestRunner.Worker
             var testResultMessage = _commandLineService.RunTestProject(projectPath);
             var messageResult = _messageParser.GetTestResult(testResultMessage);
 
+            
             var reportId = _autoTestRunnerClient.CreateTestReport(projectWatcherId, messageResult);
 
             _windowsNotificationService.Push(projectWatcherId: projectWatcherId, reportId: reportId, messageResult);
