@@ -11,10 +11,13 @@ namespace AutoTestRunner.Worker.Services.Implementation
     public class WindowsNotificationService : IWindowsNotificationService
     {
         private readonly ToastNotifier _toastNotifier;
-        private static  readonly string Launch = "launch";
-
-        public WindowsNotificationService()
+        private readonly ICommandLineService _commandLineService;
+        
+        private static readonly string Launch = "launch";
+        
+        public WindowsNotificationService(ICommandLineService commandLineService)
         {
+            _commandLineService = commandLineService;
             _toastNotifier = ToastNotificationManager.CreateToastNotifier("AutoTestRunner");
         }
 
@@ -52,8 +55,9 @@ namespace AutoTestRunner.Worker.Services.Implementation
             
             var callbackData = JsonSerializer.Deserialize<CallbackData>(attribute.InnerText);
 
-            var fileName = Environment.GetEnvironmentVariable("ProgramFiles(x86)") + @"\Google\Chrome\Application\chrome.exe";
-            Process.Start(fileName, ApiUrlHelper.GetCallBackUrl(callbackData.ProjectWatcherId, callbackData.ReportId));
+            var url = ApiUrlHelper.GetCallBackUrl(callbackData.ProjectWatcherId, callbackData.ReportId);
+
+            _commandLineService.OpenBrowser(url);
         }
 
         private class CallbackData

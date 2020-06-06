@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using AutoTestRunner.Worker.Services.Interfaces;
 
@@ -18,6 +19,12 @@ namespace AutoTestRunner.Worker.Services.Implementation
 
                 return reader.ReadToEnd();
             }
+        }
+
+        public void OpenBrowser(string url)
+        { 
+            var fileName = Environment.GetEnvironmentVariable("ProgramFiles(x86)") + @"\Google\Chrome\Application\chrome.exe";
+            Process.Start(fileName, url );
         }
 
         private static ProcessStartInfo CreateProcessStartInfo(string projectPath)

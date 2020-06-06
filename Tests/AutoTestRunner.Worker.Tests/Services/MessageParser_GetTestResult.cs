@@ -4,7 +4,7 @@ using AutoTestRunner.Worker.Services.Implementation;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AutoTestRunner.Services.Tests
+namespace AutoTestRunner.Worker.Tests.Services
 {
     [TestFixture]
     public class MessageParser_GetTestResult
