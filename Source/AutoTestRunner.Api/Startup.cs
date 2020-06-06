@@ -25,6 +25,7 @@ namespace AutoTestRunner.Api
             services.AddServices();
             services.AddRepositories();
             services.AddFactories();
+            services.AddMappers();
 
             services.AddControllers();
 

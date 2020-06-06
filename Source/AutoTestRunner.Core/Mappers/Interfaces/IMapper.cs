@@ -1,4 +1,4 @@
-﻿namespace AutoTestRunner.Worker.Mappers.Interfaces
+﻿namespace AutoTestRunner.Core.Mappers.Interfaces
 {
     public interface IMapper<T_In, T_Out>
     {

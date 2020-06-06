@@ -1,8 +1,12 @@
-﻿using AutoTestRunner.Api.Services.Interfaces;
+﻿using System.Linq;
+using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using AutoTestRunner.Core.Mappers.Interfaces;
+using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Models.Requests;
+using AutoTestRunner.Core.Models.Response;
 
 namespace AutoTestRunner.Api.Controllers
 {
@@ -12,9 +16,13 @@ namespace AutoTestRunner.Api.Controllers
     {
         private readonly ILogger<ProjectWatcherController> _logger;
         private readonly IProjectWatcherService _projectWatcherService;
+        private readonly IMapper<ProjectWatcher, ProjectWatcherDto> _projectWatcherDtoMapper;
 
-        public ProjectWatcherController(ILogger<ProjectWatcherController> logger, IProjectWatcherService projectWatcherService)
+        public ProjectWatcherController(ILogger<ProjectWatcherController> logger,
+                                        IProjectWatcherService projectWatcherService,
+                                        IMapper<ProjectWatcher, ProjectWatcherDto> projectWatcherDtoMapper)
         {
+            _projectWatcherDtoMapper = projectWatcherDtoMapper;
             _projectWatcherService = projectWatcherService;
             _logger = logger;
         }
@@ -32,7 +40,10 @@ namespace AutoTestRunner.Api.Controllers
         public async Task<IActionResult> GetProjectWatcher()
         {
             var watchedProjects = await _projectWatcherService.GetWatchedProjectsAsync();
-            return Ok(watchedProjects);
+
+            var watchedProjectDtos = watchedProjects.Select(_projectWatcherDtoMapper.Map).ToList();
+
+            return Ok(watchedProjectDtos);
         }
     }
 }

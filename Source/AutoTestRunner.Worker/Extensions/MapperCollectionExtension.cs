@@ -1,6 +1,6 @@
-﻿using AutoTestRunner.Core.Models.Requests;
+﻿using AutoTestRunner.Core.Mappers.Interfaces;
+using AutoTestRunner.Core.Models.Requests;
 using AutoTestRunner.Worker.Mappers.Implementation;
-using AutoTestRunner.Worker.Mappers.Interfaces;
 using AutoTestRunner.Worker.Models;
 using Microsoft.Extensions.DependencyInjection;
 

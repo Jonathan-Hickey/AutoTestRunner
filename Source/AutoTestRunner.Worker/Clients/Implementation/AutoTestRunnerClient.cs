@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
+using AutoTestRunner.Core.Mappers.Interfaces;
 using AutoTestRunner.Core.Models.Requests;
 using AutoTestRunner.Core.Models.Response;
 using AutoTestRunner.Core.Repositories.Interfaces;
@@ -8,7 +9,6 @@ using AutoTestRunner.Core.Services.Interfaces;
 using AutoTestRunner.Worker.Clients.Interfaces;
 using AutoTestRunner.Worker.Extensions;
 using AutoTestRunner.Worker.Helpers;
-using AutoTestRunner.Worker.Mappers.Interfaces;
 using AutoTestRunner.Worker.Models;
 
 namespace AutoTestRunner.Worker.Clients.Implementation

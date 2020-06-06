@@ -1,5 +1,5 @@
-﻿using AutoTestRunner.Core.Models.Requests;
-using AutoTestRunner.Worker.Mappers.Interfaces;
+﻿using AutoTestRunner.Core.Mappers.Interfaces;
+using AutoTestRunner.Core.Models.Requests;
 using AutoTestRunner.Worker.Models;
 
 namespace AutoTestRunner.Worker.Mappers.Implementation
