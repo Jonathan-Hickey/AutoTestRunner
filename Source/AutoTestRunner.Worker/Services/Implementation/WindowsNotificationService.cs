@@ -1,9 +1,8 @@
 ﻿using AutoTestRunner.Worker.Models;
 using AutoTestRunner.Worker.Services.Interfaces;
 using System;
-using System.Diagnostics;
-using System.Text.Json;
 using Windows.UI.Notifications;
+using AutoTestRunner.Core.Services.Interfaces;
 using AutoTestRunner.Worker.Helpers;
 
 namespace AutoTestRunner.Worker.Services.Implementation
@@ -14,9 +13,11 @@ namespace AutoTestRunner.Worker.Services.Implementation
         private readonly ICommandLineService _commandLineService;
         
         private static readonly string Launch = "launch";
-        
-        public WindowsNotificationService(ICommandLineService commandLineService)
+        private readonly IJsonService _jsonService;
+
+        public WindowsNotificationService(ICommandLineService commandLineService, IJsonService jsonService)
         {
+            _jsonService = jsonService;
             _commandLineService = commandLineService;
             _toastNotifier = ToastNotificationManager.CreateToastNotifier("AutoTestRunner");
         }
@@ -28,7 +29,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             
             var launchAttribute = template.CreateAttribute(Launch);
 
-            var data = JsonSerializer.Serialize(new CallbackData
+            var data = _jsonService.Serialize(new CallbackData
             {
                 ProjectWatcherId = projectWatcherId,
                 ReportId = reportId
@@ -53,7 +54,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
         {
             var attribute = notification.Content.DocumentElement.Attributes.GetNamedItem(Launch);
             
-            var callbackData = JsonSerializer.Deserialize<CallbackData>(attribute.InnerText);
+            var callbackData = _jsonService.Deserialize<CallbackData>(attribute.InnerText);
 
             var url = ApiUrlHelper.GetCallBackUrl(callbackData.ProjectWatcherId, callbackData.ReportId);
 

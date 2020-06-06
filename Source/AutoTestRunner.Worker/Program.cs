@@ -28,7 +28,7 @@ namespace AutoTestRunner.Worker
                     services.AddHttpClient<IAutoTestRunnerClient, AutoTestRunnerClient>();
 
                     services.AddSingleton<IFileRepository<ProjectWatcher>, FileRepository<ProjectWatcher>>(f =>
-                        new FileRepository<ProjectWatcher>(f.GetService<IAppDataService>().GetProjectWatcherFilePath(), f.GetService<IJsonService>()));
+                        new FileRepository<ProjectWatcher>(f.GetService<IJsonService>(), new FileHelper(f.GetService<IAppDataService>().GetProjectWatcherFilePath())));
                     
                     services.AddMappers();
 
