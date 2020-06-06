@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTestRunner.Api.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTestRunner.Core", "Source\AutoTestRunner.Core\AutoTestRunner.Core.csproj", "{B80454F9-D51C-4708-BF4E-8AFAC8BD1543}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTestRunner.Core.Tests", "Tests\AutoTestRunner.Core.Tests\AutoTestRunner.Core.Tests.csproj", "{44C48B63-5343-4C5F-ACA4-59C3FE112290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTestRunner.Core.Tests", "Tests\AutoTestRunner.Core.Tests\AutoTestRunner.Core.Tests.csproj", "{44C48B63-5343-4C5F-ACA4-59C3FE112290}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

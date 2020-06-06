@@ -40,21 +40,21 @@ msbuild.wrn
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/tmp
-/out-tsc
+/Source/AutoTestRunner-UI/dist
+/Source/AutoTestRunner-UI/tmp
+/Source/AutoTestRunner-UI/out-tsc
 # Only exists if Bazel was run
-/bazel-out
+/Source/AutoTestRunner-UI/bazel-out
 
 # dependencies
-/node_modules
+/Source/AutoTestRunner-UI/node_modules
 
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
 
 # IDEs and editors
-/.idea
+/Source/AutoTestRunner-UI/.idea
 .project
 .classpath
 .c9/
@@ -71,14 +71,14 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
+/Source/AutoTestRunner-UI/.sass-cache
+/Source/AutoTestRunner-UI/connect.lock
+/Source/AutoTestRunner-UI/coverage
+/Source/AutoTestRunner-UI/libpeerconnection.log
 npm-debug.log
 yarn-error.log
 testem.log
-/typings
+/Source/AutoTestRunner-UI/typings
 
 # System Files
 .DS_Store
