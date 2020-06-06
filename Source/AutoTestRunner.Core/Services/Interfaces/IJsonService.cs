@@ -1,4 +1,4 @@
-﻿namespace AutoTestRunner.Core.Repositories.Interfaces
+﻿namespace AutoTestRunner.Core.Services.Interfaces
 {
     public interface IJsonService
     {

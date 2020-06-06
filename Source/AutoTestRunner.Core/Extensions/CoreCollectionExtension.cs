@@ -1,6 +1,4 @@
-﻿using AutoTestRunner.Core.Repositories.Implementation;
-using AutoTestRunner.Core.Repositories.Interfaces;
-using AutoTestRunner.Core.Services.Implementation;
+﻿using AutoTestRunner.Core.Services.Implementation;
 using AutoTestRunner.Core.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 

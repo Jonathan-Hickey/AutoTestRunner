@@ -4,19 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoTestRunner.Core.Services.Interfaces;
 
 namespace AutoTestRunner.Core.Repositories.Implementation
 {
     public class FileRepository<T> : IFileRepository<T>
     {
-        private readonly string _filePath;
         private readonly Semaphore _semaphore;
         private readonly IJsonService _jsonService;
+        private readonly IFileHelper _fileHelper;
 
-        public FileRepository(string filePath, IJsonService jsonService)
+        public FileRepository(IJsonService jsonService, IFileHelper fileHelper)
         {
+            _fileHelper = fileHelper;
             _jsonService = jsonService;
-            _filePath = filePath;
             _semaphore = new Semaphore(1, 1);
         }
 
@@ -26,17 +27,16 @@ namespace AutoTestRunner.Core.Repositories.Implementation
             {
                 _semaphore.WaitOne();
 
-                var fileContents = await ReadFileAsync(_filePath);
+                var fileContents = await _fileHelper.ReadFileAsync();
 
                 fileContents.Add(_jsonService.Serialize(obj));
 
-                await WriteToFileAsync(_filePath, fileContents);
+                await _fileHelper.WriteToFileAsync(fileContents);
             }
             finally
             {
                 _semaphore.Release();
             }
-
         }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
@@ -44,7 +44,7 @@ namespace AutoTestRunner.Core.Repositories.Implementation
             try
             {
                 _semaphore.WaitOne();
-                var fileContents = await ReadFileAsync(_filePath);
+                var fileContents = await _fileHelper.ReadFileAsync();
 
                 return fileContents.Select(f => _jsonService.Deserialize<T>(f)).ToList();
             }
@@ -59,7 +59,7 @@ namespace AutoTestRunner.Core.Repositories.Implementation
             try
             {
                 _semaphore.WaitOne();
-                var fileContents = ReadFile(_filePath);
+                var fileContents = _fileHelper.ReadFile();
 
                 return fileContents.Select(f => _jsonService.Deserialize<T>(f)).ToList();
             }
@@ -68,12 +68,29 @@ namespace AutoTestRunner.Core.Repositories.Implementation
                 _semaphore.Release();
             }
         }
+    }
 
-        private async Task<List<string>> ReadFileAsync(string fileName)
+    public interface IFileHelper
+    {
+        Task<List<string>> ReadFileAsync();
+        List<string> ReadFile();
+        Task WriteToFileAsync(List<string> filePathsToWatch);
+    }
+
+    public class FileHelper : IFileHelper
+    {
+        private readonly string _filePath;
+
+        public FileHelper(string filePath)
+        {
+            _filePath = filePath;
+        }
+
+        public async Task<List<string>> ReadFileAsync()
         {
             var fileContents = new List<string>();
 
-            using (var fileStream = File.OpenRead(fileName))
+            using (var fileStream = File.OpenRead(_filePath))
             {
                 using (var sr = new StreamReader(fileStream))
                 {
@@ -89,11 +106,11 @@ namespace AutoTestRunner.Core.Repositories.Implementation
             }
         }
 
-        private List<string> ReadFile(string fileName)
+        public List<string> ReadFile()
         {
             var fileContents = new List<string>();
 
-            using (var fileStream = File.OpenRead(fileName))
+            using (var fileStream = File.OpenRead(_filePath))
             {
                 using (var sr = new StreamReader(fileStream))
                 {
@@ -109,9 +126,9 @@ namespace AutoTestRunner.Core.Repositories.Implementation
             }
         }
 
-        private async Task WriteToFileAsync(string filePath, List<string> filePathsToWatch)
+        public async Task WriteToFileAsync(List<string> filePathsToWatch)
         {
-            using (var fileStream = File.OpenWrite(filePath))
+            using (var fileStream = File.OpenWrite(_filePath))
             {
                 using (var streamWrite = new StreamWriter(fileStream))
                 {

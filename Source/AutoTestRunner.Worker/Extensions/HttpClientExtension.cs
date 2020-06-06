@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 using AutoTestRunner.Core.Repositories.Interfaces;
+using AutoTestRunner.Core.Services.Interfaces;
 
 namespace AutoTestRunner.Worker.Extensions
 {

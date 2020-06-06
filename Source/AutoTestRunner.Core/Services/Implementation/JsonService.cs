@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using AutoTestRunner.Core.Repositories.Interfaces;
+using AutoTestRunner.Core.Services.Interfaces;
 
-namespace AutoTestRunner.Core.Repositories.Implementation
+namespace AutoTestRunner.Core.Services.Implementation
 {
     public class JsonService : IJsonService
     {
