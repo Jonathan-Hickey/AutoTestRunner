@@ -7,7 +7,7 @@ using AutoTestRunner.Core.Models.Requests;
 namespace AutoTestRunner.Api.Controllers
 {
     [ApiController]
-    [Route("ProjectWatcher")]
+    [Route("api/ProjectWatcher")]
     public class ProjectWatcherController : ControllerBase
     {
         private readonly ILogger<ProjectWatcherController> _logger;

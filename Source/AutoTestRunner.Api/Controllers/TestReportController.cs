@@ -10,7 +10,7 @@ using AutoTestRunner.Core.Models.Response;
 namespace AutoTestRunner.Api.Controllers
 {
     [ApiController]
-    [Route("ProjectWatcher/{projectWatcherId}/TestReports")]
+    [Route("api/ProjectWatcher/{projectWatcherId}/TestReports")]
     public class TestReportController : ControllerBase
     {
         private readonly ILogger<TestReportController> _logger;
