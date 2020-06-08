@@ -1,4 +1,5 @@
-﻿using AutoTestRunner.Api.Services.Implementation;
+﻿using AutoTestRunner.Api.Controllers;
+using AutoTestRunner.Api.Services.Implementation;
 using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +11,7 @@ namespace AutoTestRunner.Api.Extensions
         {
             service.AddSingleton<ITestReportService, TestReportService>();
             service.AddSingleton<IProjectWatcherService, ProjectWatcherService>();
+            service.AddSingleton<IValidator, Validator>();
             return service;
         }
     }

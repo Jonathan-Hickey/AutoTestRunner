@@ -15,7 +15,7 @@ export class ProjectsComponent {
   }
 }
 
-interface IProject {
+export interface IProject {
   project_watcher_id: string;
   full_project_path: number;
 }

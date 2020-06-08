@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoTestRunner.Api.Services.Interfaces;
+﻿using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -7,6 +6,7 @@ using AutoTestRunner.Core.Mappers.Interfaces;
 using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Models.Requests;
 using AutoTestRunner.Core.Models.Response;
+using Microsoft.AspNetCore.Http;
 
 namespace AutoTestRunner.Api.Controllers
 {
@@ -29,8 +29,18 @@ namespace AutoTestRunner.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddTesProjectToWatcher(CreateProjectWatcherDto createProjectWatcherDto)
+        public async Task<IActionResult> AddTestProjectToWatcher(CreateProjectWatcherDto createProjectWatcherDto)
         {
+            if (createProjectWatcherDto == null || string.IsNullOrEmpty(createProjectWatcherDto.FullProjectPath))
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Must supply {nameof(CreateProjectWatcherDto)} and the value {nameof(createProjectWatcherDto.FullProjectPath)}.");
+            }
+            
+            if(!System.IO.File.Exists(createProjectWatcherDto.FullProjectPath))
+            {
+                return BadRequest("Unable to find local path");
+            }
+
             var projectWatcher = await _projectWatcherService.AddProjectToWatcherAsync(createProjectWatcherDto.FullProjectPath);
             return Created("", "");
         }

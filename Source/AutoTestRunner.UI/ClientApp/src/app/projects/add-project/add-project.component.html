@@ -1,0 +1,19 @@
+<h1>Add Project to be watched</h1>
+
+<p>Please enter in a file path to be watched</p>
+
+<div class="field" style="padding:1%">
+  <input type="text" size="100" [(ngModel)]="fullPath" (change)="validateFilePath($event)">
+  <div *ngIf="!isValidFilePath">
+    Warning this is not a valid file path
+  </div>
+
+  <button ng-disabled="isValidFilePath" (click)="addProjectToBeWatched()">
+    Submit
+  </button>
+
+  <div *ngIf="isProjectWatcherCreated">
+    <h1>Winning!!!!</h1>
+  </div>
+
+</div>
