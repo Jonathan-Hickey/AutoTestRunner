@@ -64,7 +64,7 @@ namespace AutoTestRunner.Api.Controllers
             var testReport = await _testReportService.GetTestReportAsync(projectWatcherId, reportId);
 
             var testReportDto = _testReportMapper.Map(testReport);
-
+            
             return Ok(testReportDto);
         }
     }

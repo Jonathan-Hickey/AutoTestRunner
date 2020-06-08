@@ -4,17 +4,12 @@ namespace AutoTestRunner.Worker.Helpers
 {
     public static class ApiUrlHelper
     {
-        private static readonly string _createTestReportUrl = "https://localhost:5001/api/ProjectWatcher/{0}/TestReports";
-        private static readonly string _callBackUrl = "https://localhost:5001/api/ProjectWatcher/{0}/TestReports/{1}";
+        private const string CreateTestReportUrl = "https://localhost:5001/api/ProjectWatcher/{0}/TestReports";
+        
 
         public static string GetCreateTestReportUrl(Guid projectWatcherId)
         {
-            return string.Format(_createTestReportUrl, projectWatcherId);
-        }
-
-        public static string GetCallBackUrl(Guid projectWatcherId, Guid reportId)
-        {
-            return string.Format(_callBackUrl, projectWatcherId, reportId);
+            return string.Format(CreateTestReportUrl, projectWatcherId);
         }
     }
 }

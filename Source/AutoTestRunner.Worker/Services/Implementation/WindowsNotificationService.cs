@@ -56,7 +56,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             
             var callbackData = _jsonService.Deserialize<CallbackData>(attribute.InnerText);
 
-            var url = ApiUrlHelper.GetCallBackUrl(callbackData.ProjectWatcherId, callbackData.ReportId);
+            var url = AngularUrlHelper.GetCallBackUrl(callbackData.ProjectWatcherId, callbackData.ReportId);
 
             _commandLineService.OpenBrowser(url);
         }
