@@ -12,10 +12,8 @@
     </tr>
   </thead>
   <tbody>
-  <!--project_watcher_id: string;
-  full_project_path: number;-->
     <tr *ngFor="let project of projects">
-      <td>{{ project.project_watcher_id }}</td>
+      <td  routerLink="/projects/{{project.project_watcher_id}}/reports"> {{ project.project_watcher_id }}</td>
       <td> <a href="{{project.full_project_path}}">{{ project.full_project_path }}</a></td>
     </tr>
   </tbody>

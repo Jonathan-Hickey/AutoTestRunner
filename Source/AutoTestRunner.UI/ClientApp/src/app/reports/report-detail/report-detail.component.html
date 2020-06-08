@@ -1,0 +1,14 @@
+<h1 id="tableLabel">Project {{project_name}} : Report {{report.report_id}}</h1>
+
+<p *ngIf="!report"><em>Loading...</em></p>
+    
+<div> {{report.project_watcher_id}} </div>
+<div> {{report.report_id}} </div>
+<div> {{report.project_name}} </div>
+<div> {{report.number_of_passed_tests}} </div>
+<div> {{report.number_of_failed_tests}} </div>
+<div> {{report.number_of_ignored_tests}} </div>
+<div> {{report.total_number_of_tests}} </div>
+<div> {{report.time_taken_in_second}} </div>
+<div> {{report.failed_tests}} </div>
+<div> {{report.ignored_tests}} </div>

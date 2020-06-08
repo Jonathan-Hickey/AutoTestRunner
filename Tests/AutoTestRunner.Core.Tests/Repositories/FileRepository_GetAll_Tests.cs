@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoTestRunner.Core.Repositories.Implementation;
 using AutoTestRunner.Core.Services.Implementation;
 using AutoTestRunner.Core.Tests.Fakes;
@@ -13,7 +12,7 @@ namespace AutoTestRunner.Core.Tests.Repositories
     public class FileRepository_GetAll_Tests
     {
         [Test]
-        public async Task When_NonNullObject_Passed_Should_Then_Add_ToFile()
+        public void When_NonNullObject_Passed_Should_Then_Add_ToFile()
         {
             var moqFileHelper = new Mock<IFileHelper>();
 

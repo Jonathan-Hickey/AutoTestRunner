@@ -1,4 +1,5 @@
 ﻿using AutoTestRunner.Api.Mappers.Implementation;
+using AutoTestRunner.Api.Models;
 using AutoTestRunner.Core.Mappers.Interfaces;
 using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Models.Response;
@@ -12,6 +13,8 @@ namespace AutoTestRunner.Api.Extensions
         public static IServiceCollection AddMappers(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IMapper<ProjectWatcher, ProjectWatcherDto>, ProjectWatcherDtoMapper>();
+            serviceCollection.AddSingleton<IMapper<TestReport, TestReportDto>, TestReportDtoMapper>();
+            
             return serviceCollection;
         }
     }

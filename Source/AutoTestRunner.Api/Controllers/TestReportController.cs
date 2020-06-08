@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using AutoTestRunner.Api.Models;
+using AutoTestRunner.Core.Mappers.Interfaces;
 using AutoTestRunner.Core.Models.Requests;
 using AutoTestRunner.Core.Models.Response;
 
@@ -16,11 +18,14 @@ namespace AutoTestRunner.Api.Controllers
         private readonly ILogger<TestReportController> _logger;
         private readonly ITestReportService _testReportService;
         private readonly ITestReportFactory _testReportFactory;
+        private readonly IMapper<TestReport, TestReportDto> _testReportMapper;
 
         public TestReportController(ILogger<TestReportController> logger,
                                     ITestReportService testReportService,
-                                    ITestReportFactory testReportFactory)
+                                    ITestReportFactory testReportFactory,
+                                    IMapper<TestReport, TestReportDto> testReportMapper)
         {
+            _testReportMapper = testReportMapper;
             _testReportFactory = testReportFactory;
             _testReportService = testReportService;
             _logger = logger;
@@ -47,8 +52,8 @@ namespace AutoTestRunner.Api.Controllers
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(GetTestResultReport)}");
             var projectTestReports = await _testReportService.GetTestReportsAsync(projectWatcherId);
-
-            return Ok(projectTestReports);
+            var testReportDtos = _testReportMapper.Map(projectTestReports);
+            return Ok(testReportDtos);
         }
 
         [HttpGet]
@@ -57,7 +62,10 @@ namespace AutoTestRunner.Api.Controllers
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(GetTestResultReport)}");
             var testReport = await _testReportService.GetTestReportAsync(projectWatcherId, reportId);
-            return Ok(testReport);
+
+            var testReportDto = _testReportMapper.Map(testReport);
+
+            return Ok(testReportDto);
         }
     }
 }

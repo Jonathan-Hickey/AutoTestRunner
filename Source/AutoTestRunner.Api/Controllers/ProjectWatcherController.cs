@@ -41,7 +41,7 @@ namespace AutoTestRunner.Api.Controllers
         {
             var watchedProjects = await _projectWatcherService.GetWatchedProjectsAsync();
 
-            var watchedProjectDtos = watchedProjects.Select(_projectWatcherDtoMapper.Map).ToList();
+            var watchedProjectDtos = _projectWatcherDtoMapper.Map(watchedProjects);
 
             return Ok(watchedProjectDtos);
         }
