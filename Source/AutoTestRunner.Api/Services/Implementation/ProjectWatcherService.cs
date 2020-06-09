@@ -18,10 +18,16 @@ namespace AutoTestRunner.Api.Services.Implementation
 
         public async Task<ProjectWatcher> AddProjectToWatcherAsync(string fullPath)
         {
+            var indexOfLastBackSlash = fullPath.LastIndexOf('\\');
+            var projectWatchPath = fullPath.Substring(0, indexOfLastBackSlash);
+            var fileToWatch = fullPath.Substring(indexOfLastBackSlash + 1);
+
             var newestProjectWatcher = new ProjectWatcher
             {
                 ProjectWatcherId = Guid.NewGuid(),
-                FullProjectPath = fullPath
+                FullProjectPath = fullPath,
+                ProjectWatchPath = projectWatchPath,
+                FileToWatch =  fileToWatch
             };
 
             await _fileRepository.WriteAsync(newestProjectWatcher);

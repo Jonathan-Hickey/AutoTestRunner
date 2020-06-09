@@ -17,5 +17,7 @@ export class ProjectsComponent {
 
 export interface IProject {
   project_watcher_id: string;
-  full_project_path: number;
+  full_project_path: string;
+  rile_to_watch: string,
+  project_watch_path: string
 }

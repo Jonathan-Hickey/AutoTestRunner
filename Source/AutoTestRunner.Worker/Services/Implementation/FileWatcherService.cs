@@ -33,7 +33,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
 
         public void WatchTestProject(ProjectWatcher project)
         {
-            var fileWatcher = new CustomFileWatcher(_memoryCache, project.ProjectWatcherId, project.FullProjectPath, _filter);
+            var fileWatcher = new CustomFileWatcher(_memoryCache, project.ProjectWatcherId, project.ProjectWatchPath, project.FileToWatch);
             fileWatcher.OnChange = _testRunnerService.RunTests;
             _fileWatcherLookUp.Add(project.ProjectWatcherId, fileWatcher);
         }

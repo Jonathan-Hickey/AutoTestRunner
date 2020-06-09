@@ -16,9 +16,6 @@ export class AddProjectComponent {
 
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    //http.get<IProject[]>(baseUrl + 'ProjectWatcher').subscribe(result => {
-    //  this.projects = result;
-    //}, error => console.error(error));
     this.isValidFilePath = null;
     this.isProjectWatcherCreated = null;
   }
@@ -34,7 +31,6 @@ export class AddProjectComponent {
       this.isProjectWatcherCreated = true;
     }, error => this.isProjectWatcherCreated = false);
   }
-
 }
 
 
