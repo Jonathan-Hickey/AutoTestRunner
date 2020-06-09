@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoTestRunner.Core.Repositories.Implementation;
 using AutoTestRunner.Core.Services.Implementation;
@@ -17,16 +19,20 @@ namespace AutoTestRunner.Core.Tests.Repositories
         {
             var moqFileHelper = new Mock<IFileHelper>();
 
-            var list = new List<string>();
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
+            static async IAsyncEnumerable<string> GetTestValues()
+            {
+                yield return "{\"FakeData\":\"This is some fake input\"}";
+                yield return "{\"FakeData\":\"This is some fake input\"}";
+                yield return "{\"FakeData\":\"This is some fake input\"}";
 
-            moqFileHelper.Setup(f => f.ReadFileAsync()).ReturnsAsync(list);
+                await Task.CompletedTask; // to make the compiler warning go away
+            }
+            
+            moqFileHelper.Setup(f => f.ReadFileAsync()).Returns(GetTestValues());
 
             var fileRepository = new FileRepository<FakeNullableData>(new JsonService(), moqFileHelper.Object);
 
-            var results = await fileRepository.GetAllAsync();
+            var results = await fileRepository.GetAllAsync(CancellationToken.None).ToListAsync().AsTask();
 
             var expectedResults = new List<FakeNullableData>
             {

@@ -22,16 +22,16 @@ namespace AutoTestRunner.Api.Services.Implementation
             await _testReportRepository.WriteAsync(testReport);
         }
 
-        public Task<TestReport> GetTestReportAsync(Guid projectWatcherId, Guid reportId)
+        public async Task<TestReport> GetTestReportAsync(Guid projectWatcherId, Guid reportId)
         {
-            return GetTestReportsAsync(projectWatcherId).SingleAsync(r => r.ReportId == reportId);
+            return (await GetTestReportsAsync(projectWatcherId)).Single(r => r.ReportId == reportId);
         }
 
-        public async Task<IEnumerable<TestReport>> GetTestReportsAsync(Guid projectWatcherId)
+        public async Task<IReadOnlyList<TestReport>> GetTestReportsAsync(Guid projectWatcherId)
         {
-            var testReports = await _testReportRepository.GetAllAsync();
+            var testReports= await _testReportRepository.GetAllAsync().ToListAsync().AsTask();
 
-            return testReports.Where(r => r.ProjectWatcherId == projectWatcherId);
+            return testReports.Where(r => r.ProjectWatcherId == projectWatcherId).ToList();
         }
     }
 }

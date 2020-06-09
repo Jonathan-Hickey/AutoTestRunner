@@ -21,9 +21,7 @@ namespace AutoTestRunner.Worker
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var projectsToWatch = await _fileRepository.GetAllAsync();
-
-            foreach (var project in projectsToWatch)
+            await foreach(var project in _fileRepository.GetAllAsync(stoppingToken))
             {
                 _fileWatcherService.WatchTestProject(project);
             }

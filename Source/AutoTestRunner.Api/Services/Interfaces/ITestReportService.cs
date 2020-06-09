@@ -9,6 +9,6 @@ namespace AutoTestRunner.Api.Services.Interfaces
     {
         Task CreateTestReportAsync(TestReport testReport);
         Task<TestReport> GetTestReportAsync(Guid projectWatcherId, Guid reportId);
-        Task<IEnumerable<TestReport>> GetTestReportsAsync(Guid projectWatcherId);
+        Task<IReadOnlyList<TestReport>> GetTestReportsAsync(Guid projectWatcherId);
     }
 }

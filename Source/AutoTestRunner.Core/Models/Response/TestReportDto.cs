@@ -35,5 +35,6 @@ namespace AutoTestRunner.Core.Models.Response
 
         [JsonPropertyName("ignored_tests")] 
         public IReadOnlyList<string> IgnoredTests { get; set; }
+
     }
 }

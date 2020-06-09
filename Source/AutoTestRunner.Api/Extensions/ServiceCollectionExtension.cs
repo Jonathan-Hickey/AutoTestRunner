@@ -11,6 +11,7 @@ namespace AutoTestRunner.Api.Extensions
         {
             service.AddSingleton<ITestReportService, TestReportService>();
             service.AddSingleton<IProjectWatcherService, ProjectWatcherService>();
+            service.AddSingleton<IHashService, HashService>();
             service.AddSingleton<IValidator, Validator>();
             return service;
         }

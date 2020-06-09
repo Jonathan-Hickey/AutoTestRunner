@@ -19,18 +19,19 @@ namespace AutoTestRunner.Core.Tests.Repositories
             var moqFileHelper = new Mock<IFileHelper>();
 
             var list = new List<string>();
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
 
-            moqFileHelper.Setup(f => f.ReadFileAsync()).ReturnsAsync(list);
+            static async IAsyncEnumerable<string> GetTestValues()
+            {
+                yield return"{\"FakeData\":\"This is some fake input\"}";
+                yield return"{\"FakeData\":\"This is some fake input\"}";
+                yield return "{\"FakeData\":\"This is some fake input\"}";
+
+                await Task.CompletedTask; // to make the compiler warning go away
+            }
 
 
-            var expectedInput = new List<string>();
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
-            list.Add("{\"FakeData\":\"This is some fake input\"}");
-            list.Add("{\"FakeId\":1,\"FakeData\":\"This is some fake input\"}");
+
+            moqFileHelper.Setup(f => f.ReadFileAsync()).Returns(GetTestValues());
 
             moqFileHelper.Setup(f => f.WriteToFileAsync(It.Is<List<string>>(l => string.Equals(l[3], "item4"))))
                 .Returns(Task.CompletedTask);
