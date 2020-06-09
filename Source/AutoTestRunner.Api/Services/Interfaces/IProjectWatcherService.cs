@@ -1,4 +1,5 @@
-﻿using AutoTestRunner.Core.Models;
+﻿using System;
+using AutoTestRunner.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,5 +9,7 @@ namespace AutoTestRunner.Api.Services.Interfaces
     {
         Task<ProjectWatcher> AddProjectToWatcherAsync(string fullPath);
         Task<IReadOnlyList<ProjectWatcher>> GetWatchedProjectsAsync();
+        Task<ProjectWatcher> GetWatchedProjectAsync(Guid projectWatcherId);
+
     }
 }

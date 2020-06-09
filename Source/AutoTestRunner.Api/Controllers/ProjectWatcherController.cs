@@ -1,4 +1,5 @@
-﻿using AutoTestRunner.Api.Services.Interfaces;
+﻿using System;
+using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -42,18 +43,30 @@ namespace AutoTestRunner.Api.Controllers
             }
 
             var projectWatcher = await _projectWatcherService.AddProjectToWatcherAsync(createProjectWatcherDto.FullProjectPath);
-            return Created("", "");
+            
+            return CreatedAtRoute("GetProjectWatcher", new { projectWatcherId = projectWatcher.ProjectWatcherId }, new { project_watcher_id = projectWatcher.ProjectWatcherId });
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetProjectWatcher()
+        public async Task<IActionResult> GetProjectWatchers()
         {
             var watchedProjects = await _projectWatcherService.GetWatchedProjectsAsync();
 
             var watchedProjectDtos = _projectWatcherDtoMapper.Map(watchedProjects);
 
             return Ok(watchedProjectDtos);
+        }
+
+        [HttpGet]
+        [Route("{projectWatcherId}", Name = "GetProjectWatcher")]
+        public async Task<IActionResult> GetProjectWatcher(Guid projectWatcherId)
+        {
+            var watchedProject = await _projectWatcherService.GetWatchedProjectAsync(projectWatcherId);
+
+            var watchedProjectDto = _projectWatcherDtoMapper.Map(watchedProject);
+
+            return Ok(watchedProjectDto);
         }
     }
 }

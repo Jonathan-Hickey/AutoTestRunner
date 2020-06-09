@@ -3,6 +3,7 @@ using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AutoTestRunner.Api.Services.Implementation
@@ -38,6 +39,12 @@ namespace AutoTestRunner.Api.Services.Implementation
         public Task<IReadOnlyList<ProjectWatcher>> GetWatchedProjectsAsync()
         {
             return _fileRepository.GetAllAsync();
+        }
+
+        public Task<ProjectWatcher> GetWatchedProjectAsync(Guid projectWatcherId)
+        {
+            return _fileRepository.GetAllAsync()
+                                  .SingleAsync(p => p.ProjectWatcherId == projectWatcherId);
         }
     }
 }

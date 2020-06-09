@@ -34,6 +34,4 @@ namespace AutoTestRunner.Api.Services.Implementation
             return testReports.Where(r => r.ProjectWatcherId == projectWatcherId);
         }
     }
-
-
 }

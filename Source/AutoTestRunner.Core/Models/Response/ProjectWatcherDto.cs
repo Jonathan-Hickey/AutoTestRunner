@@ -14,7 +14,7 @@ namespace AutoTestRunner.Core.Models.Response
         [JsonPropertyName("project_watch_path")]
         public string ProjectWatchPath { get; set; }
 
-        [JsonPropertyName("rile_to_watch")]
+        [JsonPropertyName("file_to_watch")]
         public string FileToWatch { get; set; }
     }
 }

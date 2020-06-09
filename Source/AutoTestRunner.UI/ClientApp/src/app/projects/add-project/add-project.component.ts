@@ -11,6 +11,7 @@ export class AddProjectComponent {
 
   public fullPath: string;
   public isValidFilePath: boolean;
+  public projectId: string;
 
   public isProjectWatcherCreated: boolean;
 
@@ -18,17 +19,29 @@ export class AddProjectComponent {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.isValidFilePath = null;
     this.isProjectWatcherCreated = null;
+    this.projectId = null;
   }
 
   public validateFilePath(object) {
-    this.http.get(this.baseUrl + 'validate/filepath?filePath='+this.fullPath).subscribe(result => {
-      this.isValidFilePath = true;
-    }, error => this.isValidFilePath = false);
+
+    if (this.fullPath == null || this.fullPath === "")
+    {
+      this.isValidFilePath = null;
+    }
+    else
+    {
+      this.http.get(this.baseUrl + 'validate/filepath?filePath=' + this.fullPath).subscribe(result => {
+        this.isValidFilePath = true;
+      }, error => this.isValidFilePath = false);
+    }
   }
 
   public addProjectToBeWatched() {
+
     this.http.post<IProject>(this.baseUrl + 'ProjectWatcher', new CreateProjectWatcherDto(this.fullPath)).subscribe(result => {
       this.isProjectWatcherCreated = true;
+      this.fullPath = null;
+      this.projectId = result.project_watcher_id;
     }, error => this.isProjectWatcherCreated = false);
   }
 }

@@ -15,5 +15,10 @@ namespace System.Linq
         {
             return (await enumerable).Single(predict);
         }
+
+        public static async Task<T> SingleAsync<T>(this Task<IReadOnlyList<T>> enumerable, Func<T, bool> predict)
+        {
+            return (await enumerable).Single(predict);
+        }
     }
 }
