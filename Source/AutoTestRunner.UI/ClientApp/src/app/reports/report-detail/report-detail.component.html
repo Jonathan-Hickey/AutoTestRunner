@@ -1,15 +1,22 @@
-<h1 id="tableLabel">Project: {{report.project_name}}</h1>
-<h2>Report: {{report.report_id}}</h2>
-
 <p *ngIf="!report"><em>Loading...</em></p>
-    
-<div> {{report.project_watcher_id}} </div>
-<div> {{report.report_id}} </div>
-<div> {{report.project_name}} </div>
-<div> {{report.number_of_passed_tests}} </div>
-<div> {{report.number_of_failed_tests}} </div>
-<div> {{report.number_of_ignored_tests}} </div>
-<div> {{report.total_number_of_tests}} </div>
-<div> {{report.time_taken_in_second}} </div>
-<div> {{report.failed_tests}} </div>
-<div> {{report.ignored_tests}} </div>
+
+<div *ngIf="report">
+
+  <div class="card">
+    <div class="card-header textcenter">
+      Project: {{report.project_name}}
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item textcenter">Time Taken: {{report.time_taken_in_second}} Seconds</li>
+      <li class="list-group-item textcenter">Total Number of Tests:  {{report.total_number_of_tests}}  Seconds</li>
+      <li class="list-group-item textcenter">Tests passed: {{report.number_of_passed_tests}}</li>
+      <li class="list-group-item textcenter" *ngIf="report.number_of_failed_tests"> Failed passed: {{report.number_of_failed_tests}}</li>
+      <li class="list-group-item textcenter" *ngIf="report.number_of_ignored_tests"> Ignored passed: {{report.number_of_ignored_tests}}</li>
+    </ul>
+  </div>
+
+  <div> {{report.failed_tests}} ToDo show failing tests  </div>
+  <div> {{report.ignored_tests}} ToDo show ignored tests </div>
+</div>
+
+
