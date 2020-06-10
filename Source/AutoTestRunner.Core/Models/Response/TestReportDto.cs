@@ -8,7 +8,10 @@ namespace AutoTestRunner.Core.Models.Response
     {
         [JsonPropertyName("project_watcher_id")]
         public Guid ProjectWatcherId { get; set; }
-        
+
+        [JsonPropertyName("run_date_time")]
+        public DateTimeOffset RunDateTime { get; set; }
+
         [JsonPropertyName("report_id")]
         public Guid ReportId { get; set; }
         

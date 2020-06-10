@@ -10,6 +10,9 @@ namespace AutoTestRunner.Api.Mappers.Implementation
         {
             return new TestReportDto
             {
+                ReportId = testReport.TestReportId,
+                ProjectWatcherId = testReport.ProjectWatcherId,
+                RunDateTime = testReport.RunDateTime,
                 TotalNumberOfTests = testReport.TotalNumberOfTests,
                 TimeTakenInSecond = testReport.TimeTakenInSecond,
                 NumberOfFailedTests = testReport.NumberOfFailedTests,
@@ -17,8 +20,6 @@ namespace AutoTestRunner.Api.Mappers.Implementation
                 NumberOfIgnoredTests = testReport.NumberOfIgnoredTests,
                 IgnoredTests = testReport.IgnoredTests,
                 FailedTests = testReport.FailedTests,
-                ReportId = testReport.TestReportId,
-                ProjectWatcherId = testReport.ProjectWatcherId,
                 NumberOfPassedTests = testReport.NumberOfPassedTests
             };
         }

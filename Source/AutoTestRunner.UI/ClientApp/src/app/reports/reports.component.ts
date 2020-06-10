@@ -23,6 +23,7 @@ export class ReportsComponent {
 
 export interface IReport {
   project_watcher_id: string;
+  run_date_time: string;
   report_id: string;
   project_name: string;
   number_of_passed_tests: number;

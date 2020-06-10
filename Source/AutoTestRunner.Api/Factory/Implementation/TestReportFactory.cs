@@ -11,8 +11,9 @@ namespace AutoTestRunner.Api.Factory.Implementation
         {
             return new TestReport
             {
-                ProjectWatcherId = projectWatcherId,
                 TestReportId = Guid.NewGuid(),
+                ProjectWatcherId = projectWatcherId,
+                RunDateTime = DateTimeOffset.Now,
                 ProjectName = request.ProjectName,
                 TimeTakenInSecond = request.TimeTakenInSecond,
                 TotalNumberOfTests = request.TotalNumberOfTests,
