@@ -8,9 +8,6 @@ namespace AutoTestRunner.Core.Models.Response
         [JsonPropertyName("project_watcher_id")]
         public Guid ProjectWatcherId { get; set; }
 
-        [JsonPropertyName("full_project_path")]
-        public string FullProjectPath { get; set; }
-
         [JsonPropertyName("project_watch_path")]
         public string ProjectWatchPath { get; set; }
 

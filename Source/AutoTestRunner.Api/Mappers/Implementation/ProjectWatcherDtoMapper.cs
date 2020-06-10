@@ -11,7 +11,6 @@ namespace AutoTestRunner.Api.Mappers.Implementation
             return new ProjectWatcherDto
             {
                 ProjectWatcherId = projectWatcher.ProjectWatcherId,
-                FullProjectPath = projectWatcher.FullProjectPathHash,
                 FileToWatch = projectWatcher.FileToWatch,
                 ProjectWatchPath = projectWatcher.ProjectWatchPath
             };
