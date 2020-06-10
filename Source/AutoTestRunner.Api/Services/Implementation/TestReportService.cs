@@ -2,6 +2,7 @@
 using AutoTestRunner.Api.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoTestRunner.Api.Repositories.Interfaces;
 
 namespace AutoTestRunner.Api.Services.Implementation
@@ -27,7 +28,7 @@ namespace AutoTestRunner.Api.Services.Implementation
 
         public IReadOnlyList<TestReport> GetTestReports(Guid projectWatcherId)
         {
-            return _testReportRepository.GetTestReports(projectWatcherId);
+            return _testReportRepository.GetTestReports(projectWatcherId).OrderByDescending(r => r.RunDateTime).ToList();
         }
     }
 }

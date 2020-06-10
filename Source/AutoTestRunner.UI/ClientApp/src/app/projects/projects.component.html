@@ -1,20 +1,18 @@
-<h1 id="tableLabel">Weather forecast</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
+<h1 id="tableLabel">All Projects</h1>
 
 <p *ngIf="!projects"><em>Loading...</em></p>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="projects">
   <thead>
     <tr>
-      <th>Project Watcher Id</th>
-      <th>Full File Path</th>
+      <th class="textcenter"> Project Name </th>
+      <th class="textcenter"> File Path </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let project of projects">
-      <td routerLink="/projects/{{project.project_watcher_id}}/reports"> {{ project.file_to_watch }}</td>
-      <td> <a href="{{project.full_project_path}}">{{ project.project_watch_path }}</a></td>
+    <tr *ngFor="let project of projects" class="clickable" routerLink="/projects/{{project.project_watcher_id}}/reports">
+      <td class="textcenter"> {{ project.file_to_watch }} </td>
+      <td > {{ project.project_watch_path }} </td>
     </tr>
   </tbody>
 </table>

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-projects',
-  templateUrl: './projects.component.html'
+  templateUrl: './projects.component.html',
 })
 export class ProjectsComponent {
   public projects: IProject[];

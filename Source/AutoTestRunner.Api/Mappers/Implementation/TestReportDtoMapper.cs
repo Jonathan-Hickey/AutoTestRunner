@@ -12,7 +12,7 @@ namespace AutoTestRunner.Api.Mappers.Implementation
             {
                 ReportId = testReport.TestReportId,
                 ProjectWatcherId = testReport.ProjectWatcherId,
-                RunDateTime = testReport.RunDateTime,
+                RunDateTime = testReport.RunDateTime.ToLocalTime().ToString("HH:mm:ss:fff dd/MM/yyyy"),
                 TotalNumberOfTests = testReport.TotalNumberOfTests,
                 TimeTakenInSecond = testReport.TimeTakenInSecond,
                 NumberOfFailedTests = testReport.NumberOfFailedTests,

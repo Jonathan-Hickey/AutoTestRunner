@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -52,7 +53,7 @@ namespace AutoTestRunner.Api.Controllers
         {
             var watchedProjects = _projectWatcherService.GetWatchedProjects();
 
-            var watchedProjectDtos = _projectWatcherDtoMapper.Map(watchedProjects);
+            var watchedProjectDtos = _projectWatcherDtoMapper.Map(watchedProjects).OrderBy(p => p.ProjectWatchPath);
 
             return Ok(watchedProjectDtos);
         }

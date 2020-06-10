@@ -4,8 +4,9 @@ import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-reports',
-  templateUrl: './reports.component.html'
+  templateUrl: './reports.component.html',
 })
+
 export class ReportsComponent {
   public reports: IReport[];
   public project_name: string;
