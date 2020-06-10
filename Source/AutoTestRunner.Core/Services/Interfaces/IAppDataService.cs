@@ -3,8 +3,7 @@
     public interface IAppDataService
     {
         string GetProjectWatcherFileName();
-        string GetProjectWatcherFilePath();
-        string GetTestReportFilePath();
+        string GetLiteDatabaseConnectionString();
         string GetAutoTestRunnerDataFolderPath();
 
     }

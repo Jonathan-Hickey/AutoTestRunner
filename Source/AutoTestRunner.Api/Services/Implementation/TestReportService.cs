@@ -1,37 +1,33 @@
 ﻿using AutoTestRunner.Api.Models;
 using AutoTestRunner.Api.Services.Interfaces;
-using AutoTestRunner.Core.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoTestRunner.Api.Repositories.Interfaces;
 
 namespace AutoTestRunner.Api.Services.Implementation
 {
     public class TestReportService : ITestReportService
     {
-        private readonly IFileRepository<TestReport> _testReportRepository;
+        private readonly ITestReportRepository _testReportRepository;
 
-        public TestReportService(IFileRepository<TestReport> testReportRepository)
+        public TestReportService(ITestReportRepository testReportRepository)
         {
             _testReportRepository = testReportRepository;
         }
 
-        public async Task CreateTestReportAsync(TestReport testReport)
+        public void CreateTestReportAsync(TestReport testReport)
         {
-            await _testReportRepository.WriteAsync(testReport);
+            _testReportRepository.AddTestReport(testReport);
         }
 
-        public async Task<TestReport> GetTestReportAsync(Guid projectWatcherId, Guid reportId)
+        public TestReport GetTestReport(Guid projectWatcherId, Guid reportId)
         {
-            return (await GetTestReportsAsync(projectWatcherId)).Single(r => r.ReportId == reportId);
+            return _testReportRepository.GetTestReport(projectWatcherId: projectWatcherId, testReportId:reportId);
         }
 
-        public async Task<IReadOnlyList<TestReport>> GetTestReportsAsync(Guid projectWatcherId)
+        public IReadOnlyList<TestReport> GetTestReports(Guid projectWatcherId)
         {
-            var testReports= await _testReportRepository.GetAllAsync().ToListAsync().AsTask();
-
-            return testReports.Where(r => r.ProjectWatcherId == projectWatcherId).ToList();
+            return _testReportRepository.GetTestReports(projectWatcherId);
         }
     }
 }

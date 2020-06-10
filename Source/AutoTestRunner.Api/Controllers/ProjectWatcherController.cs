@@ -2,7 +2,6 @@
 using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using AutoTestRunner.Core.Mappers.Interfaces;
 using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Models.Requests;
@@ -30,7 +29,7 @@ namespace AutoTestRunner.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddTestProjectToWatcher(CreateProjectWatcherDto createProjectWatcherDto)
+        public IActionResult AddTestProjectToWatcher(CreateProjectWatcherDto createProjectWatcherDto)
         {
             if (createProjectWatcherDto == null || string.IsNullOrEmpty(createProjectWatcherDto.FullProjectPath))
             {
@@ -42,16 +41,16 @@ namespace AutoTestRunner.Api.Controllers
                 return BadRequest("Unable to find local path");
             }
 
-            var projectWatcher = await _projectWatcherService.AddProjectToWatcherAsync(createProjectWatcherDto.FullProjectPath);
+            var projectWatcher = _projectWatcherService.AddProjectToWatcher(createProjectWatcherDto.FullProjectPath);
             
             return CreatedAtRoute("GetProjectWatcher", new { projectWatcherId = projectWatcher.ProjectWatcherId }, new { project_watcher_id = projectWatcher.ProjectWatcherId });
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetProjectWatchers()
+        public IActionResult GetProjectWatchers()
         {
-            var watchedProjects = await _projectWatcherService.GetWatchedProjectsAsync();
+            var watchedProjects = _projectWatcherService.GetWatchedProjects();
 
             var watchedProjectDtos = _projectWatcherDtoMapper.Map(watchedProjects);
 
@@ -60,9 +59,9 @@ namespace AutoTestRunner.Api.Controllers
 
         [HttpGet]
         [Route("{projectWatcherId}", Name = "GetProjectWatcher")]
-        public async Task<IActionResult> GetProjectWatcher(Guid projectWatcherId)
+        public IActionResult GetProjectWatcher(Guid projectWatcherId)
         {
-            var watchedProject = await _projectWatcherService.GetWatchedProjectAsync(projectWatcherId);
+            var watchedProject =_projectWatcherService.GetWatchedProject(projectWatcherId);
 
             var watchedProjectDto = _projectWatcherDtoMapper.Map(watchedProject);
 

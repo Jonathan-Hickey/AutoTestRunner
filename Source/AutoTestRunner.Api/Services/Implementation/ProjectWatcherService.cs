@@ -3,27 +3,25 @@ using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AutoTestRunner.Api.Services.Implementation
 {
     public class ProjectWatcherService : IProjectWatcherService
     {
-        private readonly IFileRepository<ProjectWatcher> _fileRepository;
         private readonly IHashService _service;
+        private readonly IProjectWatcherRepository _projectWatcherRepository;
 
-        public ProjectWatcherService(IFileRepository<ProjectWatcher> fileRepository, IHashService service)
+        public ProjectWatcherService(IHashService service, IProjectWatcherRepository projectWatcherRepository)
         {
+            _projectWatcherRepository = projectWatcherRepository;
             _service = service;
-            _fileRepository = fileRepository;
         }
 
-        public async Task<ProjectWatcher> AddProjectToWatcherAsync(string fullPath)
+        public ProjectWatcher AddProjectToWatcher(string fullPath)
         {
             var fullProjectPathHash = _service.GetHash(fullPath);
 
-            var projectWatcher = await GetWatchedProjectAsync(fullProjectPathHash);
+            var projectWatcher = GetWatchedProject(fullProjectPathHash);
 
             if (projectWatcher != null)
             {
@@ -42,24 +40,24 @@ namespace AutoTestRunner.Api.Services.Implementation
                 FileToWatch =  fileToWatch
             };
 
-            await _fileRepository.WriteAsync(newestProjectWatcher);
+            _projectWatcherRepository.AddProjectWatcher(newestProjectWatcher);
 
             return newestProjectWatcher;
         }
 
-        public async Task<IReadOnlyList<ProjectWatcher>> GetWatchedProjectsAsync()
+        public IReadOnlyList<ProjectWatcher> GetWatchedProjects()
         {
-            return await _fileRepository.GetAllAsync().ToListAsync().AsTask();
+            return _projectWatcherRepository.GetProjectWatchers();
         }
 
-        public Task<ProjectWatcher> GetWatchedProjectAsync(Guid projectWatcherId)
+        public ProjectWatcher GetWatchedProject(Guid projectWatcherId)
         {
-            return _fileRepository.GetAllAsync().SingleAsync(p => p.ProjectWatcherId == projectWatcherId).AsTask();
+            return _projectWatcherRepository.GetProjectWatcher(projectWatcherId);
         }
 
-        private Task<ProjectWatcher> GetWatchedProjectAsync(string fullProjectPathHash)
-        {
-            return _fileRepository.GetAllAsync().SingleOrDefaultAsync(p => p.FullProjectPathHash == fullProjectPathHash).AsTask();
+        private ProjectWatcher GetWatchedProject(string fullProjectPathHash)
+        { 
+            return _projectWatcherRepository.GetProjectWatcher(fullProjectPathHash);
         }
     }
 }

@@ -13,19 +13,18 @@ namespace AutoTestRunner.Worker.Services.Implementation
     public class FileWatcherService : IFileWatcherService
     {
         private readonly IDictionary<Guid, CustomFileWatcher> _fileWatcherLookUp;
-        private readonly IFileRepository<ProjectWatcher> _fileRepository;
         private readonly ITestRunnerService _testRunnerService;
         private readonly IAppDataService _appDataService;
 
-        private static readonly string _filter = "*.dll";
         private readonly MemoryCache _memoryCache;
-        
+        private readonly IProjectWatcherRepository _projectWatcherRepository;
 
-        public FileWatcherService(IFileRepository<ProjectWatcher> fileRepository, ITestRunnerService testRunnerService, IAppDataService appDataService)
+
+        public FileWatcherService(IProjectWatcherRepository projectWatcherRepository, ITestRunnerService testRunnerService, IAppDataService appDataService)
         {
+            _projectWatcherRepository = projectWatcherRepository;
             _appDataService = appDataService;
             _testRunnerService = testRunnerService;
-            _fileRepository = fileRepository;
             _fileWatcherLookUp = new Dictionary<Guid, CustomFileWatcher>();
 
             _memoryCache = MemoryCache.Default;
@@ -49,7 +48,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
 
         private void OnWatchProjectFileChanged(Guid myApplicationId, FileSystemEventArgs e)
         {
-            var projectsToWatch = _fileRepository.GetAll();
+            var projectsToWatch = _projectWatcherRepository.GetProjectWatchers();
 
             foreach (var project in projectsToWatch)
             {

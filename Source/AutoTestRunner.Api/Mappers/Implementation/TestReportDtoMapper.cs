@@ -17,7 +17,7 @@ namespace AutoTestRunner.Api.Mappers.Implementation
                 NumberOfIgnoredTests = testReport.NumberOfIgnoredTests,
                 IgnoredTests = testReport.IgnoredTests,
                 FailedTests = testReport.FailedTests,
-                ReportId = testReport.ReportId,
+                ReportId = testReport.TestReportId,
                 ProjectWatcherId = testReport.ProjectWatcherId,
                 NumberOfPassedTests = testReport.NumberOfPassedTests
             };

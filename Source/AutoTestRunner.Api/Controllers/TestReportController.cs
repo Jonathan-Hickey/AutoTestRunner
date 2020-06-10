@@ -3,7 +3,6 @@ using AutoTestRunner.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Threading.Tasks;
 using AutoTestRunner.Api.Models;
 using AutoTestRunner.Core.Mappers.Interfaces;
 using AutoTestRunner.Core.Models.Requests;
@@ -33,36 +32,35 @@ namespace AutoTestRunner.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddTestResultReportAsync(Guid projectWatcherId, CreateTestReportDto testReportDto)
+        public IActionResult AddTestResultReportAsync(Guid projectWatcherId, CreateTestReportDto testReportDto)
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(AddTestResultReportAsync)}");
             var testReport = _testReportFactory.CreateTestReport(projectWatcherId, testReportDto);
 
-            await _testReportService.CreateTestReportAsync(testReport);
+            _testReportService.CreateTestReportAsync(testReport);
 
             return Created("", new CreateTestReportResponseDto
             {
-                ReportId = testReport.ReportId
+                ReportId = testReport.TestReportId
             });
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetTestResultReport(Guid projectWatcherId)
+        public IActionResult GetTestResultReport(Guid projectWatcherId)
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(GetTestResultReport)}");
-            var projectTestReports = await _testReportService.GetTestReportsAsync(projectWatcherId);
+            var projectTestReports = _testReportService.GetTestReports(projectWatcherId);
             var testReportDtos = _testReportMapper.Map(projectTestReports);
             return Ok(testReportDtos);
         }
 
         [HttpGet]
         [Route("{reportId}")]
-        public async Task<IActionResult> GetTestResultReport(Guid projectWatcherId, Guid reportId)
+        public IActionResult GetTestResultReport(Guid projectWatcherId, Guid reportId)       
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(GetTestResultReport)}");
-            var testReport = await _testReportService.GetTestReportAsync(projectWatcherId, reportId);
-
+            var testReport = _testReportService.GetTestReport(projectWatcherId, reportId);
             var testReportDto = _testReportMapper.Map(testReport);
             
             return Ok(testReportDto);

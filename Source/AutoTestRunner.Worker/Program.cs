@@ -21,20 +21,20 @@ namespace AutoTestRunner.Worker
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseWindowsService()
-                .ConfigureServices((hostContext, services) =>
+                .ConfigureServices((hostContext, service) =>
                 {
-                    services.AddCore();
+                    service.AddCore();
                     
-                    services.AddHttpClient<IAutoTestRunnerClient, AutoTestRunnerClient>();
-
-                    services.AddSingleton<IFileRepository<ProjectWatcher>, FileRepository<ProjectWatcher>>(f =>
-                        new FileRepository<ProjectWatcher>(f.GetService<IJsonService>(), new FileHelper(f.GetService<IAppDataService>().GetProjectWatcherFilePath())));
+                    service.AddHttpClient<IAutoTestRunnerClient, AutoTestRunnerClient>();
                     
-                    services.AddMappers();
+                    service.AddSingleton<IConnectionFactory, ConnectionFactory>(s =>
+                        new ConnectionFactory(s.GetService<IAppDataService>().GetLiteDatabaseConnectionString()));
+                    
+                    service.AddMappers();
 
-                    services.AddServices();
+                    service.AddServices();
 
-                    services.AddHostedService<Worker>();
+                    service.AddHostedService<Worker>();
                 });
     }
 }

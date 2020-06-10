@@ -1,5 +1,5 @@
-﻿using AutoTestRunner.Api.Models;
-using AutoTestRunner.Core.Models;
+﻿using AutoTestRunner.Api.Repositories.Implementation;
+using AutoTestRunner.Api.Repositories.Interfaces;
 using AutoTestRunner.Core.Repositories.Implementation;
 using AutoTestRunner.Core.Repositories.Interfaces;
 using AutoTestRunner.Core.Services.Interfaces;
@@ -9,17 +9,15 @@ namespace AutoTestRunner.Api.Extensions
 {
     public static class RepositoryCollectionExtension
     {
-        public static IServiceCollection AddRepositories(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddRepositories(this IServiceCollection service)
         {
-            
-            serviceCollection.AddSingleton<IFileRepository<ProjectWatcher>, FileRepository<ProjectWatcher>>(f =>
-                new FileRepository<ProjectWatcher>(f.GetService<IJsonService>(), new FileHelper(f.GetService<IAppDataService>().GetProjectWatcherFilePath())));
 
-            serviceCollection.AddSingleton<IFileRepository<TestReport>, FileRepository<TestReport>>(f =>
-                new FileRepository<TestReport>(f.GetService<IJsonService>(), new FileHelper(f.GetService<IAppDataService>().GetTestReportFilePath())));
+            service.AddSingleton<IConnectionFactory, ConnectionFactory>(s =>
+                new ConnectionFactory(s.GetService<IAppDataService>().GetLiteDatabaseConnectionString()));
 
+            service.AddSingleton<ITestReportRepository, TestReportRepository>();
 
-            return serviceCollection;
+            return service;
         }
     }
 }

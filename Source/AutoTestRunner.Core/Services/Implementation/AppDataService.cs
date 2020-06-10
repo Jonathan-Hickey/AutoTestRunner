@@ -9,6 +9,7 @@ namespace AutoTestRunner.Core.Services.Implementation
         private static readonly string _autoTestRunnerData = "AutoTestRunnerData";
         private static readonly string _projectWatcherFileName = "ProjectWatcher.json";
         private static readonly string _testResultsFileName = "TestResults.json";
+        private static readonly string _autoWatcherDb = "AutoWatcher.db";
 
         public string GetProjectWatcherFileName()
         {
@@ -26,6 +27,11 @@ namespace AutoTestRunner.Core.Services.Implementation
             }
 
             return projectWatcherFilePath;
+        }
+
+        public string GetLiteDatabaseConnectionString()
+        {
+            return Path.Combine(GetAutoTestRunnerDataFolderPath(), _autoWatcherDb);
         }
 
         public string GetTestReportFilePath()

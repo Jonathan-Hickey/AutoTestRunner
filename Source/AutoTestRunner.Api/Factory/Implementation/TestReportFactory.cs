@@ -12,7 +12,7 @@ namespace AutoTestRunner.Api.Factory.Implementation
             return new TestReport
             {
                 ProjectWatcherId = projectWatcherId,
-                ReportId = Guid.NewGuid(),
+                TestReportId = Guid.NewGuid(),
                 ProjectName = request.ProjectName,
                 TimeTakenInSecond = request.TimeTakenInSecond,
                 TotalNumberOfTests = request.TotalNumberOfTests,
