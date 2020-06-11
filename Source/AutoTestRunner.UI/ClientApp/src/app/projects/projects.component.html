@@ -1,4 +1,4 @@
-<h1 id="tableLabel">All Projects</h1>
+<h1 id="tableLabel" class="textcenter">All Projects</h1>
 
 <p *ngIf="!projects"><em>Loading...</em></p>
 
@@ -12,7 +12,7 @@
   <tbody>
     <tr *ngFor="let project of projects" class="clickable" routerLink="/projects/{{project.project_watcher_id}}/reports">
       <td class="textcenter"> {{ project.file_to_watch }} </td>
-      <td > {{ project.project_watch_path }} </td>
+      <td> {{ project.project_watch_path }} </td>
     </tr>
   </tbody>
 </table>

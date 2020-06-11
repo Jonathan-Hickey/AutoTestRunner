@@ -4,7 +4,10 @@ import { IProject } from "../projects.component";
 
 @Component({
   selector: 'add-project',
-  templateUrl: './add-project.component.html'
+  templateUrl: './add-project.component.html',
+  styles: [
+      'input { width: 100%;}'
+    ]
 })
 export class AddProjectComponent {
   public projects: IProject[];

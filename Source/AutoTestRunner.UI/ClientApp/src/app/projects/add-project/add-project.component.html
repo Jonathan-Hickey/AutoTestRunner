@@ -3,7 +3,6 @@
 <p>Please enter in a file path to be watched</p>
 
 <div>
-
   <div class="alert alert-danger" *ngIf="isValidFilePath != null && !isValidFilePath">
     Warning this is not a valid file path
   </div>
@@ -11,15 +10,14 @@
   <div class="alert alert-success" *ngIf="projectId != null" routerLink="/projects/{{projectId}}/reports">
     Successfully add project to watcher. Click here to view reports.
   </div>
-  
-  <input type="text" size="100" [(ngModel)]="fullPath" (change)="validateFilePath($event)">
+
+  <input type="text" [(ngModel)]="fullPath" (change)="validateFilePath($event)">
 
   <div class="mt-2">
     <button class="btn btn-success" (click)="addProjectToBeWatched()" [disabled]="isValidFilePath === null || !isValidFilePath ? true : false">
       Submit
     </button>
   </div>
-
 
   <div *ngIf="isProjectWatcherCreated ">
     <h1>Winning!!!!</h1>
