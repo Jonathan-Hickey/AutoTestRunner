@@ -5,6 +5,11 @@ a {
   color: #0366d6;
 }
 
+body {
+  background: #212529;
+  color: #ffffff;
+}
+
 code {
   color: #e01a76;
 }
@@ -21,4 +26,16 @@ code {
 
 .textcenter {
   text-align: center;
+}
+
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.card {
+  color: black;
 }
