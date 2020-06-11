@@ -13,6 +13,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { ReportDetailComponent } from "./reports/report-detail/report-detail.component";
 import { AddProjectComponent } from "./projects/add-project/add-project.component";
 
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AddProjectComponent } from "./projects/add-project/add-project.componen
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

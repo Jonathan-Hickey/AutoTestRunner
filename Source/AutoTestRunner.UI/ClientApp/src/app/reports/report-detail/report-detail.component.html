@@ -8,10 +8,7 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item textcenter">Time Taken: {{report.time_taken_in_second}} Seconds</li>
-      <li class="list-group-item textcenter">Total Number of Tests:  {{report.total_number_of_tests}}  Seconds</li>
-      <li class="list-group-item textcenter">Tests passed: {{report.number_of_passed_tests}}</li>
-      <li class="list-group-item textcenter" *ngIf="report.number_of_failed_tests"> Failed passed: {{report.number_of_failed_tests}}</li>
-      <li class="list-group-item textcenter" *ngIf="report.number_of_ignored_tests"> Ignored passed: {{report.number_of_ignored_tests}}</li>
+      <li class="list-group-item textcenter">Total Number of Tests:  {{report.total_number_of_tests}}</li>
     </ul>
   </div>
 
@@ -19,4 +16,15 @@
   <div> {{report.ignored_tests}} ToDo show ignored tests </div>
 </div>
 
+
+<div *ngIf="doughnutChartData !== null">
+  <div class="chart-wrapper">
+    <canvas baseChart
+            [data]="doughnutChartData"
+            [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType"
+            [colors]="colors">
+    </canvas>
+  </div>
+</div>
 
