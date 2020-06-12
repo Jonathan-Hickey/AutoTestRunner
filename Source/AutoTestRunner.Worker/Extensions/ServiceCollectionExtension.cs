@@ -6,15 +6,17 @@ namespace AutoTestRunner.Worker.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddServices(this IServiceCollection service)
         {
-            serviceCollection.AddSingleton<IWindowsNotificationService, WindowsNotificationService>();
-            serviceCollection.AddSingleton<IMessageParser, MessageParser>();
-            serviceCollection.AddSingleton<ICommandLineService, CommandLineService>();
-            serviceCollection.AddSingleton<ITestRunnerService, TestRunnerService>();
-            serviceCollection.AddSingleton<IFileWatcherService, FileWatcherService>();
+            service.AddSingleton<IWindowsNotificationService, WindowsNotificationService>();
+            service.AddSingleton<IMessageParser, MessageParser>();
+            service.AddSingleton<ICommandLineService, CommandLineService>();
+            service.AddSingleton<ITestRunnerService, TestRunnerService>();
+            service.AddSingleton<IFileWatcherService, FileWatcherService>();
+            service.AddSingleton<ITestSummaryParser, TestSummaryParser>();
+            service.AddSingleton<ITestDetailParser, TestDetailParser>();
 
-            return serviceCollection;
+            return service;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace AutoTestRunner.Worker.Tests.Services
         {
             var testResultMessage = FakeDataHelper.GetPassed_Failed_Ignored_Message();
 
-            var messageParser = new MessageParser();
+            var messageParser = new MessageParser(new TestSummaryParser(), new TestDetailParser());
 
             var testResult = messageParser.GetTestResult(testResultMessage);
 
@@ -37,7 +37,7 @@ namespace AutoTestRunner.Worker.Tests.Services
         {
             var testResultMessage = FakeDataHelper.GetFailed_Ignored_Message();
 
-            var messageParser = new MessageParser();
+            var messageParser = new MessageParser(new TestSummaryParser(), new TestDetailParser());
 
             var testResult = messageParser.GetTestResult(testResultMessage);
 
