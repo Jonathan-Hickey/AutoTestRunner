@@ -38,8 +38,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             info.RedirectStandardOutput = true;
             info.RedirectStandardError = true;
 
-            //TODO dotnet test -v=normal --no-build
-            info.Arguments = $"/c cd {projectPath} & dotnet test";
+            info.Arguments = $"/c cd {projectPath} & dotnet test -v n --no-build";
 
             return info;
         }

@@ -1,18 +1,41 @@
-﻿Test run for C:\Users\Jonathan\source\repos\TestProjectUsedByAutoTestRunner\TestProjectUsedByAutoTestRunner\bin\Debug\netcoreapp3.1\TestProjectUsedByAutoTestRunner.dll(.NETCoreApp,Version=v3.1)
+﻿Build started 6/11/2020 3:19:35 PM.
+Test run for C:\Users\Jonathan\source\repos\TestProjectUsedByAutoTestRunner\TestProjectUsedByAutoTestRunner\bin\Debug\netcoreapp3.1\TestProjectUsedByAutoTestRunner.dll(.NETCoreApp,Version=v3.1)
 Microsoft (R) Test Execution Command Line Tool Version 16.6.0
 Copyright (c) Microsoft Corporation.  All rights reserved.
 
 Starting test execution, please wait...
 
 A total of 1 test files matched the specified pattern.
-  X Test_That_Fails [67ms]
+NUnit Adapter 3.15.1.0: Test execution started
+Running all tests in C:\Users\Jonathan\source\repos\TestProjectUsedByAutoTestRunner\TestProjectUsedByAutoTestRunner\bin\Debug\netcoreapp3.1\TestProjectUsedByAutoTestRunner.dll
+   NUnit3TestExecutor converted 5 of 5 NUnit test cases
+NUnit Adapter 3.15.1.0: Test execution complete
+  X Test_That_Fails [48ms]
   Stack Trace:
-     at TestProjectUsedByAutoTestRunner.Tests.Test_That_Fails() in C:\Users\Jonathan\source\repos\TestProjectUsedByAutoTestRunner\TestProjectUsedByAutoTestRunner\UnitTest1.cs:line 21
+     at TestProjectUsedByAutoTestRunner.Tests.Test_That_Fails() in C:\Users\Jonathan\source\repos\TestProjectUsedByAutoTestRunner\TestProjectUsedByAutoTestRunner\UnitTest1.cs:line 31
+
+  X Test_That_Fails_4 [1ms]
+  Stack Trace:
+     at TestProjectUsedByAutoTestRunner.Tests.Test_That_Fails_4() in C:\Users\Jonathan\source\repos\TestProjectUsedByAutoTestRunner\TestProjectUsedByAutoTestRunner\UnitTest1.cs:line 39
 
   ! Test_That_Ignore [< 1ms]
+  X Test_That_Passes [5ms]
+  Error Message:
+   System.InvalidOperationException : Assert.Equals should not be used. Use Assert.AreEqual instead.
+  Stack Trace:
+     at NUnit.Framework.Assert.Equals(Object a, Object b)
+   at TestProjectUsedByAutoTestRunner.Tests.Test_That_Passes() in C:\Users\Jonathan\source\repos\TestProjectUsedByAutoTestRunner\TestProjectUsedByAutoTestRunner\UnitTest1.cs:line 19
+  V Test_That_Passes_3 [1ms]
 
-Total tests: 3
+Test Run Failed.
+Total tests: 5
      Passed: 1
-     Failed: 1
+     Failed: 3
     Skipped: 1
- Total time: 1.7281 Seconds
+ Total time: 1.4091 Seconds
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.13
