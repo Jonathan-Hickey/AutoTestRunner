@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoTestRunner.Core.Models;
 
 namespace AutoTestRunner.Api.Models
 {
@@ -8,13 +9,8 @@ namespace AutoTestRunner.Api.Models
         public Guid TestReportId { get; set; }
         public DateTimeOffset RunDateTime { get; set; }
         public Guid ProjectWatcherId { get; set; }
-        public string ProjectName { get; set; }
-        public int? NumberOfPassedTests { get; set; }
-        public int? NumberOfFailedTests { get; set; }
-        public int? NumberOfIgnoredTests { get; set; }
-        public int? TotalNumberOfTests { get; set; }
-        public decimal TimeTakenInSecond { get; set; }
-        public IReadOnlyList<string> FailedTests { get; set; }
-        public IReadOnlyList<string> IgnoredTests { get; set; }
+        public TestSummary TestSummary { get; set; }
+
+        public IReadOnlyList<TestDetail> TestDetails { get; set; }
     }
 }

@@ -6,16 +6,16 @@
 
   <div class="card">
     <div class="card-header textcenter">
-      Project: {{report.project_name}}
+      Project: {{report.test_summary.project_name}}
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item textcenter">Time Taken: {{report.time_taken_in_second}} Seconds</li>
-      <li class="list-group-item textcenter">Total Number of Tests: {{report.total_number_of_tests}}</li>
+      <li class="list-group-item textcenter">Time Taken: {{report.test_summary.time_taken_in_second}} Seconds</li>
+      <li class="list-group-item textcenter">Total Number of Tests: {{report.test_summary.total_number_of_tests}}</li>
     </ul>
   </div>
 
-  <div> {{report.failed_tests}} ToDo show failing tests </div>
-  <div> {{report.ignored_tests}} ToDo show ignored tests </div>
+  <div> {{report.test_summary.failed_tests}} ToDo show failing tests </div>
+  <div> {{report.test_summary.ignored_tests}} ToDo show ignored tests </div>
 </div>
 
 <div class="container">

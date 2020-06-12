@@ -17,4 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoTestRunner.Core\AutoTestRunner.Core.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>

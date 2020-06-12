@@ -52,7 +52,7 @@ export class ReportDetailComponent {
     http.get<IReport>(baseUrl + 'ProjectWatcher/' + projectId + '/TestReports/' + reportId).subscribe(results => {
       this.report = results;
 
-      this.doughnutChartData = [[this.report.number_of_passed_tests, this.report.number_of_ignored_tests, this.report.number_of_failed_tests]];
+      this.doughnutChartData = [[this.report.test_summary.number_of_passed_tests, this.report.test_summary.number_of_ignored_tests, this.report.test_summary.number_of_failed_tests]];
     }, error => console.error(error));
   }
 }

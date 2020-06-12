@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using AutoTestRunner.Worker.Models;
+using AutoTestRunner.Core.Models;
 using AutoTestRunner.Worker.Services.Interfaces;
 
 namespace AutoTestRunner.Worker.Services.Implementation

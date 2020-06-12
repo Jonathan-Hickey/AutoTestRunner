@@ -1,4 +1,4 @@
-﻿using AutoTestRunner.Worker.Models;
+﻿using AutoTestRunner.Core.Models;
 
 namespace AutoTestRunner.Worker.Services.Interfaces
 {

@@ -1,5 +1,5 @@
+using AutoTestRunner.Core.Models;
 using AutoTestRunner.Services.Tests.Helpers;
-using AutoTestRunner.Worker.Models;
 using AutoTestRunner.Worker.Services.Implementation;
 using FluentAssertions;
 using NUnit.Framework;

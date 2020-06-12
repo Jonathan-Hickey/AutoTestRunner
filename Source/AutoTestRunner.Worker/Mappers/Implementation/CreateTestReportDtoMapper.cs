@@ -1,6 +1,6 @@
 ﻿using AutoTestRunner.Core.Mappers.Interfaces;
+using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Models.Requests;
-using AutoTestRunner.Worker.Models;
 
 namespace AutoTestRunner.Worker.Mappers.Implementation
 {
@@ -16,9 +16,6 @@ namespace AutoTestRunner.Worker.Mappers.Implementation
                 NumberOfIgnoredTests = testSummary.NumberOfIgnoredTests,
                 NumberOfPassedTests = testSummary.NumberOfPassedTests,
                 NumberOfFailedTests = testSummary.NumberOfFailedTests,
-                //TODO: add list of test data {testName : "", TimeTakenInMilliSeconds}
-                //IgnoredTests = new List<string>(),
-                //FailedTests = new List<string>(),
             };
         }
     }

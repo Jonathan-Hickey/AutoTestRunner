@@ -1,7 +1,7 @@
-﻿using AutoTestRunner.Worker.Models;
-using AutoTestRunner.Worker.Services.Interfaces;
+﻿using AutoTestRunner.Worker.Services.Interfaces;
 using System;
 using Windows.UI.Notifications;
+using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Services.Interfaces;
 using AutoTestRunner.Worker.Helpers;
 

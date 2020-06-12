@@ -1,4 +1,4 @@
-﻿namespace AutoTestRunner.Worker.Models
+﻿namespace AutoTestRunner.Core.Models
 {
     public class TestSummary
     {

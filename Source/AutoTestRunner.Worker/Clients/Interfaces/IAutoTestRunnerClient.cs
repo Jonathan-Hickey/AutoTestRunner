@@ -1,5 +1,5 @@
 ﻿using System;
-using AutoTestRunner.Worker.Models;
+using AutoTestRunner.Core.Models;
 
 namespace AutoTestRunner.Worker.Clients.Interfaces
 {
