@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace AutoTestRunner.Core.Models.Response
 {
-    public class TestReportDto
+    public class TestSummaryDto
     {
         [JsonPropertyName("project_watcher_id")]
         public Guid ProjectWatcherId { get; set; }

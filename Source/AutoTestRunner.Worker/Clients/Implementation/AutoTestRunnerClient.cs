@@ -17,13 +17,13 @@ namespace AutoTestRunner.Worker.Clients.Implementation
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<AutoTestRunnerClient> _logger;
-        private readonly IMapper<TestResult, CreateTestReportDto> _createTestReportDtoMapper;
+        private readonly IMapper<TestSummary, CreateTestReportDto> _createTestReportDtoMapper;
         private readonly IJsonService _jsonService;
 
         public AutoTestRunnerClient(HttpClient httpClient,
                                     ILogger<AutoTestRunnerClient> logger,
                                     IJsonService jsonService,
-                                    IMapper<TestResult, CreateTestReportDto> createTestReportDtoMapper)
+                                    IMapper<TestSummary, CreateTestReportDto> createTestReportDtoMapper)
         {
             _jsonService = jsonService;
             _createTestReportDtoMapper = createTestReportDtoMapper;
@@ -31,9 +31,9 @@ namespace AutoTestRunner.Worker.Clients.Implementation
             _httpClient = httpClient;
         }
 
-        public Guid CreateTestReport(Guid projectWatcherId, TestResult testResult)
+        public Guid CreateTestReport(Guid projectWatcherId, TestSummary testSummary)
         {
-            var request = _createTestReportDtoMapper.Map(testResult);
+            var request = _createTestReportDtoMapper.Map(testSummary);
 
             var responseMessage = _httpClient.Post(_jsonService, ApiUrlHelper.GetCreateTestReportUrl(projectWatcherId), request);
 

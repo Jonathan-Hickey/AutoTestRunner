@@ -17,12 +17,12 @@ namespace AutoTestRunner.Api.Controllers
         private readonly ILogger<TestReportController> _logger;
         private readonly ITestReportService _testReportService;
         private readonly ITestReportFactory _testReportFactory;
-        private readonly IMapper<TestReport, TestReportDto> _testReportMapper;
+        private readonly IMapper<TestReport, TestSummaryDto> _testReportMapper;
 
         public TestReportController(ILogger<TestReportController> logger,
                                     ITestReportService testReportService,
                                     ITestReportFactory testReportFactory,
-                                    IMapper<TestReport, TestReportDto> testReportMapper)
+                                    IMapper<TestReport, TestSummaryDto> testReportMapper)
         {
             _testReportMapper = testReportMapper;
             _testReportFactory = testReportFactory;

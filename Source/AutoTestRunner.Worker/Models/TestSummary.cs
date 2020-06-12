@@ -1,6 +1,6 @@
 ﻿namespace AutoTestRunner.Worker.Models
 {
-    public class TestResult
+    public class TestSummary
     {
         public string ProjectName { get; set; }
         public int? NumberOfPassedTests { get; set; }

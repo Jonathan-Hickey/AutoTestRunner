@@ -13,7 +13,7 @@ namespace AutoTestRunner.Api.Extensions
         public static IServiceCollection AddMappers(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IMapper<ProjectWatcher, ProjectWatcherDto>, ProjectWatcherDtoMapper>();
-            serviceCollection.AddSingleton<IMapper<TestReport, TestReportDto>, TestReportDtoMapper>();
+            serviceCollection.AddSingleton<IMapper<TestReport, TestSummaryDto>, TestReportDtoMapper>();
             
             return serviceCollection;
         }

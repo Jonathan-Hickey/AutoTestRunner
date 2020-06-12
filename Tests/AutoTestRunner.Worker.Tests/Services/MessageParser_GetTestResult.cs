@@ -19,7 +19,7 @@ namespace AutoTestRunner.Worker.Tests.Services
 
             var testResult = messageParser.GetTestResult(testResultMessage);
 
-            var expectedResult = new TestResult
+            var expectedResult = new TestSummary
             {
                 TotalNumberOfTests = 3,
                 ProjectName = "TestProjectUsedByAutoTestRunner.dll",
@@ -41,7 +41,7 @@ namespace AutoTestRunner.Worker.Tests.Services
 
             var testResult = messageParser.GetTestResult(testResultMessage);
 
-            var expectedResult = new TestResult
+            var expectedResult = new TestSummary
             {
                 TotalNumberOfTests = 2,
                 ProjectName = "TestProjectUsedByAutoTestRunner.dll",

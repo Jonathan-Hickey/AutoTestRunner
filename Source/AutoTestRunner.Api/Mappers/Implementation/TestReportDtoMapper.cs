@@ -4,11 +4,11 @@ using AutoTestRunner.Core.Models.Response;
 
 namespace AutoTestRunner.Api.Mappers.Implementation
 {
-    public class TestReportDtoMapper : IMapper<TestReport, TestReportDto>
+    public class TestReportDtoMapper : IMapper<TestReport, TestSummaryDto>
     {
-        public TestReportDto Map(TestReport testReport)
+        public TestSummaryDto Map(TestReport testReport)
         {
-            return new TestReportDto
+            return new TestSummaryDto
             {
                 ReportId = testReport.TestReportId,
                 ProjectWatcherId = testReport.ProjectWatcherId,

@@ -4,6 +4,6 @@ namespace AutoTestRunner.Worker.Services.Interfaces
 {
     public interface IMessageParser
     {
-        TestResult GetTestResult(string testResultMessage);
+        TestSummary GetTestResult(string testResultMessage);
     }
 }

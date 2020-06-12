@@ -1,4 +1,3 @@
-using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Repositories.Interfaces;
 using Microsoft.Extensions.Hosting;
 using System.Threading;
@@ -19,7 +18,7 @@ namespace AutoTestRunner.Worker
             _fileWatcherService = fileWatcherService;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             foreach(var project in _projectWatcherRepository.GetProjectWatchers())
             {
@@ -27,6 +26,8 @@ namespace AutoTestRunner.Worker
             }
 
             _fileWatcherService.WatchForChangesInWatchedProjectFile();
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -14,21 +14,8 @@ namespace AutoTestRunner.Worker.Tests.Services
         [Test]
         public void Test()
         {
-            var testResultMessage = "X Test_That_Passes[5ms]";
-            
-
-            //! Test_That_Ignore[< 1ms]
-            //X Test_That_Passes[5ms]
-            //V Test_That_Passes_3[1ms]
 
 
-            else
-            {
-                Assert.Fail();
-            }
-            
         }
-
-
     }
 }

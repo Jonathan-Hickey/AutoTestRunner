@@ -28,7 +28,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
         private readonly Regex _testTimeTakenInMs = new Regex("\\[\\d*ms\\]", RegexOptions.Compiled);
 
 
-        public TestResult GetTestResult(string testResultMessage)
+        public TestSummary GetTestResult(string testResultMessage)
         {
             var testReportDetailMatch = _testName.Match(testResultMessage);
             var  testDetails =  GetTestDetails(testReportDetailMatch);
@@ -37,7 +37,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             return GetTestReportSummary(testResultMessage);
         }
 
-        private TestResult GetTestReportSummary(string testResultMessage)
+        private TestSummary GetTestReportSummary(string testResultMessage)
         {
             var totalTests = GetNullableIntValue(_totalTestsRegex, testResultMessage, TotalTests.Length);
             var passedTests = GetNullableIntValue(_passedTestsRegex, testResultMessage, PassedTests.Length);
@@ -47,7 +47,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             var timeTaken = GetDecimalValue(_totalTimeTakenRegex, testResultMessage, TotalTimeTaken.Length);
 
 
-            return new TestResult
+            return new TestSummary
             {
                 ProjectName = projectName,
                 TotalNumberOfTests = totalTests,

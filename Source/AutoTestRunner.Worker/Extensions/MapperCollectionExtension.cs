@@ -10,7 +10,7 @@ namespace AutoTestRunner.Worker.Extensions
     {
         public static IServiceCollection AddMappers(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IMapper<TestResult, CreateTestReportDto>, CreateTestReportDtoMapper>();
+            serviceCollection.AddSingleton<IMapper<TestSummary, CreateTestReportDto>, CreateTestReportDtoMapper>();
             return serviceCollection;
         }
     }

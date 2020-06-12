@@ -22,7 +22,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             _toastNotifier = ToastNotificationManager.CreateToastNotifier("AutoTestRunner");
         }
 
-        public void Push(Guid projectWatcherId, Guid reportId, TestResult testResult)
+        public void Push(Guid projectWatcherId, Guid reportId, TestSummary testSummary)
         {
             var template = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText01);
 
@@ -39,7 +39,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
             template.DocumentElement.SetAttributeNode(launchAttribute);
 
             var textNodes = template.GetElementsByTagName("text");
-            textNodes.Item(0).InnerText = testResult.ToString();
+            textNodes.Item(0).InnerText = testSummary.ToString();
 
             
             var notification = new ToastNotification(template);

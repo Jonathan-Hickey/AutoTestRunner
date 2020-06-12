@@ -5,6 +5,6 @@ namespace AutoTestRunner.Worker.Services.Interfaces
 {
     public interface IWindowsNotificationService
     {
-        void Push(Guid projectWatcherId, Guid reportId, TestResult testResult);
+        void Push(Guid projectWatcherId, Guid reportId, TestSummary testSummary);
     }
 }

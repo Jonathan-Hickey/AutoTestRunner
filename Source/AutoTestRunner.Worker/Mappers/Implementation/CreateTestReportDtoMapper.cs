@@ -4,18 +4,18 @@ using AutoTestRunner.Worker.Models;
 
 namespace AutoTestRunner.Worker.Mappers.Implementation
 {
-    public class CreateTestReportDtoMapper : IMapper<TestResult, CreateTestReportDto>
+    public class CreateTestReportDtoMapper : IMapper<TestSummary, CreateTestReportDto>
     {
-        public CreateTestReportDto Map(TestResult testResult)
+        public CreateTestReportDto Map(TestSummary testSummary)
         {
             return new CreateTestReportDto
             {
-                TotalNumberOfTests = testResult.TotalNumberOfTests,
-                TimeTakenInSecond = testResult.TimeTakenInSecond,
-                ProjectName = testResult.ProjectName,
-                NumberOfIgnoredTests = testResult.NumberOfIgnoredTests,
-                NumberOfPassedTests = testResult.NumberOfPassedTests,
-                NumberOfFailedTests = testResult.NumberOfFailedTests,
+                TotalNumberOfTests = testSummary.TotalNumberOfTests,
+                TimeTakenInSecond = testSummary.TimeTakenInSecond,
+                ProjectName = testSummary.ProjectName,
+                NumberOfIgnoredTests = testSummary.NumberOfIgnoredTests,
+                NumberOfPassedTests = testSummary.NumberOfPassedTests,
+                NumberOfFailedTests = testSummary.NumberOfFailedTests,
                 //TODO: add list of test data {testName : "", TimeTakenInMilliSeconds}
                 //IgnoredTests = new List<string>(),
                 //FailedTests = new List<string>(),
