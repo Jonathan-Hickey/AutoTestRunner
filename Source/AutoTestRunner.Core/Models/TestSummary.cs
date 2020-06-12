@@ -1,7 +1,10 @@
-﻿namespace AutoTestRunner.Core.Models
+﻿using System;
+
+namespace AutoTestRunner.Core.Models
 {
     public class TestSummary
     {
+        public Guid TestSummaryReportId { get; set; }
         public string ProjectName { get; set; }
         public int? NumberOfPassedTests { get; set; }
         public int? NumberOfFailedTests { get; set; }

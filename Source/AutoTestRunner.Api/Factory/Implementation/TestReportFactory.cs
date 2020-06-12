@@ -24,6 +24,7 @@ namespace AutoTestRunner.Api.Factory.Implementation
         {
             return new TestSummary
             {
+                TestSummaryReportId = Guid.NewGuid(),
                 ProjectName = request.ProjectName,
                 TimeTakenInSecond = request.TimeTakenInSecond,
                 TotalNumberOfTests = request.TotalNumberOfTests,
@@ -33,6 +34,4 @@ namespace AutoTestRunner.Api.Factory.Implementation
             };
         }
     }
-
 }
-

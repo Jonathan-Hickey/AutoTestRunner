@@ -16,11 +16,11 @@
   <tbody>
     <tr *ngFor="let report of reports" class="clickable" data-toggle="tooltip"  routerLink="/projects/{{report.project_watcher_id}}/reports/{{report.report_id}}">
       <td class="textcenter"> {{report.run_date_time}} </td>
-      <td class="textcenter"> {{report.number_of_passed_tests}} </td>
-      <td class="textcenter"> {{report.number_of_failed_tests}} </td>
-      <td class="textcenter"> {{report.number_of_ignored_tests}} </td>
-      <td class="textcenter"> {{report.total_number_of_tests}} </td>
-      <td class="textcenter"> {{report.time_taken_in_second}} seconds </td>
+      <td class="textcenter"> {{report.test_summary.number_of_passed_tests}} </td>
+      <td class="textcenter"> {{report.test_summary.number_of_failed_tests}} </td>
+      <td class="textcenter"> {{report.test_summary.number_of_ignored_tests}} </td>
+      <td class="textcenter"> {{report.test_summary.total_number_of_tests}} </td>
+      <td class="textcenter"> {{report.test_summary.time_taken_in_second}} seconds </td>
     </tr>
   </tbody>
 </table>
