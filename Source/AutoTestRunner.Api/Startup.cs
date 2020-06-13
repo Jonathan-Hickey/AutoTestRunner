@@ -22,6 +22,8 @@ namespace AutoTestRunner.Api
         {
             services.AddCore();
 
+            services.AddResponseCaching();
+
             services.AddServices();
             services.AddRepositories();
             services.AddFactories();
@@ -44,7 +46,7 @@ namespace AutoTestRunner.Api
             }
 
             app.UseHttpsRedirection();
-
+            app.UseResponseCaching();
             app.UseRouting();
 
             app.UseAuthorization();

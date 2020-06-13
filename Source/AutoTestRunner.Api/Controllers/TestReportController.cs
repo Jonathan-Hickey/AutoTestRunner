@@ -57,6 +57,7 @@ namespace AutoTestRunner.Api.Controllers
 
         [HttpGet]
         [Route("{reportId}")]
+        [ResponseCache(Duration = 120)]
         public IActionResult GetTestResultReport(Guid projectWatcherId, Guid reportId)       
         {
             _logger.LogInformation($"{nameof(TestReportController)}_{nameof(GetTestResultReport)}");
