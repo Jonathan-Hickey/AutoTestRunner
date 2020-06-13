@@ -27,6 +27,9 @@ export interface IReport {
   project_watcher_id : string;
   run_date_time : string;
   test_summary: IReportSummary;
+  passed_tests: ITestDetail[];
+  failed_tests: ITestDetail[];
+  ignored_tests : ITestDetail[];
 }
 
 export interface IReportSummary {
@@ -36,4 +39,16 @@ export interface IReportSummary {
   number_of_ignored_tests: number;
   total_number_of_tests: number;
   time_taken_in_second: number;
+}
+
+export enum TestStatus {
+  Passed = 1,
+  Failed = 2,
+  Ignored = 3
+}
+
+export interface ITestDetail {
+  test_name: string;
+  time_taken_in_milliseconds: number;
+  test_status: TestStatus;
 }

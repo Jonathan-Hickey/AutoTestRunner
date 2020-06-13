@@ -3,36 +3,56 @@
 </p>
 
 <div *ngIf="report">
-
-  <div class="card">
-    <div class="card-header textcenter">
-      Project: {{report.test_summary.project_name}}
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item textcenter">Time Taken: {{report.test_summary.time_taken_in_second}} Seconds</li>
-      <li class="list-group-item textcenter">Total Number of Tests: {{report.test_summary.total_number_of_tests}}</li>
-    </ul>
-  </div>
-
-  <div> {{report.test_summary.failed_tests}} ToDo show failing tests </div>
-  <div> {{report.test_summary.ignored_tests}} ToDo show ignored tests </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-2">
-    </div>
-    <div class="col-10">
-      <div *ngIf="doughnutChartData !== null">
-
-        <div style="display: block">
-          <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [options]="chartOptions"
-                  [legend]="chartLegend" [chartType]="chartType" [colors]="colors">
-          </canvas>
+  <div class="container">
+    <div class="row pt-3">
+      <div class="offset-md-2 col-md-8">
+        <div class="card">
+          <div class="card-header textcenter">
+            Project: {{report.test_summary.project_name}}
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item textcenter">Time Taken: {{report.test_summary.time_taken_in_second}} Seconds</li>
+            <li class="list-group-item textcenter">Total Number of Tests: {{report.test_summary.total_number_of_tests}}</li>
+          </ul>
         </div>
       </div>
     </div>
-    <div class="col-2">
+
+    <div class="row pt-3">
+      <div class="col-md-12">
+        <div *ngIf="doughnutChartData !== null">
+          <div style="display: block">
+            <canvas baseChart [data]="doughnutChartData"
+                    [labels]="doughnutChartLabels"
+                    [options]="chartOptions"
+                    [legend]="chartLegend"
+                    [chartType]="chartType"
+                    [colors]="colors"
+                    (chartClick)="chartClicked($event)">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pt-5" *ngIf="testDetails">
+      <div class="col-md-12">
+        <h3 id="tableLabel" class="textcenter">{{testDetailsTableHeader}}</h3>
+        <table class="table table-hover table-dark" aria-labelledby="tableLabel">
+          <thead>
+            <tr>
+              <th class="textcenter"> Test Name </th>
+              <th class="textcenter"> Time Taken</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let testdetail of testDetails" class="clickable" data-toggle="tooltip" routerLink="/projects/{{report.project_watcher_id}}/reports/{{report.report_id}}">
+              <td class="textcenter"> {{testdetail.test_name}} </td>
+              <td class="textcenter"> {{testdetail.time_taken_in_milliseconds}} ms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
