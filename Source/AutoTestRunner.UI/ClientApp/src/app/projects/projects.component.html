@@ -13,6 +13,9 @@
     <tr *ngFor="let project of projects" class="clickable" routerLink="/projects/{{project.project_watcher_id}}/reports">
       <td class="textcenter"> {{ project.file_to_watch }} </td>
       <td> {{ project.project_watch_path }} </td>
+
+      <!--TODO need to add options to delete and update path-->
+      <!--Good link for UI icons https://getbootstrap.com/docs/3.3/components/-->
     </tr>
   </tbody>
 </table>
