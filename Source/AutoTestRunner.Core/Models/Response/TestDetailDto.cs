@@ -3,7 +3,7 @@ using AutoTestRunner.Core.Enums;
 
 namespace AutoTestRunner.Core.Models.Response
 {
-    public class TestDetailRequestDto
+    public class TestDetailResponseDto
     {
         [JsonPropertyName("test_name")]
         public string TestName { get; set; }

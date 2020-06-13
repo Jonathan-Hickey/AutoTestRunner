@@ -19,12 +19,12 @@ namespace AutoTestRunner.Core.Models.Response
         public TestSummaryDto TestSummary { get; set; }
 
         [JsonPropertyName("passed_tests")]
-        public IReadOnlyList<TestDetailRequestDto> PassedTests { get; set; }
+        public IReadOnlyList<TestDetailResponseDto> PassedTests { get; set; }
         
         [JsonPropertyName("failed_tests")] 
-        public IReadOnlyList<TestDetailRequestDto> FailedTests { get; set; }
+        public IReadOnlyList<TestDetailResponseDto> FailedTests { get; set; }
         
         [JsonPropertyName("ignored_tests")]
-        public IReadOnlyList<TestDetailRequestDto> IgnoredTests { get; set; }
+        public IReadOnlyList<TestDetailResponseDto> IgnoredTests { get; set; }
     }
 }
