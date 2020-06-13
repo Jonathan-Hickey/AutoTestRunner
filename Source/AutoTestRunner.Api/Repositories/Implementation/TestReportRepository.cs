@@ -25,6 +25,7 @@ namespace AutoTestRunner.Api.Repositories.Implementation
                 var testReports = db.GetCollection<TestReport>();
 
                 return testReports.Include(r => r.TestSummary)
+                                  .Include(r => r.TestDetails)
                                   .Find(r => r.TestReportId == testReportId && r.ProjectWatcherId == projectWatcherId)
                                   .Single();
             }
@@ -37,6 +38,7 @@ namespace AutoTestRunner.Api.Repositories.Implementation
                 var testReports = db.GetCollection<TestReport>();
 
                 return testReports.Include(r => r.TestSummary)
+                                  .Include(r => r.TestDetails)
                                   .Find(r => r.ProjectWatcherId == projectWatcherId)
                                   .ToList();
             }
@@ -46,19 +48,24 @@ namespace AutoTestRunner.Api.Repositories.Implementation
         {
             using (var db = _connectionFactory.CreateConnection())
             {
-                var testSummaries = db.GetCollection<TestSummary>();
-                
                 BsonMapper.Global.Entity<TestSummary>()
                     .Id(c => c.TestSummaryReportId);
 
+                BsonMapper.Global.Entity<TestDetail>()
+                    .Id(t => t.TestDetailId);
 
                 BsonMapper.Global.Entity<TestReport>()
                     .Id(c => c.TestReportId)
-                    .DbRef(e => e.TestSummary, "TestSummary");
+                    .DbRef(e => e.TestSummary, "TestSummary")
+                    .DbRef(e => e.TestDetails, "TestDetail");
 
-
+                var testSummaries = db.GetCollection<TestSummary>();
                 testSummaries.EnsureIndex(s => s.TestSummaryReportId);
                 testSummaries.Insert(testReport.TestSummary);
+
+                var testDetails = db.GetCollection<TestDetail>();
+                testDetails.EnsureIndex(s => s.TestDetailId);
+                testDetails.Insert(testReport.TestDetails);
 
                 var testReports = db.GetCollection<TestReport>();
 

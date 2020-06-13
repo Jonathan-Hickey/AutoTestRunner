@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using AutoTestRunner.Core.Mappers.Interfaces;
 using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Models.Requests;
 using AutoTestRunner.Core.Models.Response;
-using AutoTestRunner.Core.Repositories.Interfaces;
 using AutoTestRunner.Core.Services.Interfaces;
 using AutoTestRunner.Worker.Clients.Interfaces;
 using AutoTestRunner.Worker.Extensions;
@@ -17,13 +17,13 @@ namespace AutoTestRunner.Worker.Clients.Implementation
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<AutoTestRunnerClient> _logger;
-        private readonly IMapper<TestSummary, CreateTestReportDto> _createTestReportDtoMapper;
+        private readonly IMapper<TestSummary, IReadOnlyList<TestDetail>, CreateTestReportDto> _createTestReportDtoMapper;
         private readonly IJsonService _jsonService;
 
         public AutoTestRunnerClient(HttpClient httpClient,
                                     ILogger<AutoTestRunnerClient> logger,
                                     IJsonService jsonService,
-                                    IMapper<TestSummary, CreateTestReportDto> createTestReportDtoMapper)
+                                    IMapper<TestSummary, IReadOnlyList<TestDetail>, CreateTestReportDto> createTestReportDtoMapper)
         {
             _jsonService = jsonService;
             _createTestReportDtoMapper = createTestReportDtoMapper;
@@ -31,9 +31,9 @@ namespace AutoTestRunner.Worker.Clients.Implementation
             _httpClient = httpClient;
         }
 
-        public Guid CreateTestReport(Guid projectWatcherId, TestSummary testSummary)
+        public Guid CreateTestReport(Guid projectWatcherId, TestSummary testSummary, IReadOnlyList<TestDetail> testDetails)
         {
-            var request = _createTestReportDtoMapper.Map(testSummary);
+            var request = _createTestReportDtoMapper.Map(testSummary, testDetails);
 
             var responseMessage = _httpClient.Post(_jsonService, ApiUrlHelper.GetCreateTestReportUrl(projectWatcherId), request);
 

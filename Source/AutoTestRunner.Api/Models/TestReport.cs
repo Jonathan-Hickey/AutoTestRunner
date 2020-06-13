@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoTestRunner.Core.Models;
 
 namespace AutoTestRunner.Api.Models
@@ -10,6 +11,6 @@ namespace AutoTestRunner.Api.Models
         public Guid ProjectWatcherId { get; set; }
         public TestSummary TestSummary { get; set; }
 
-        //public IReadOnlyList<TestDetail> TestDetails { get; set; }
+        public IReadOnlyList<TestDetail> TestDetails { get; set; }
     }
 }

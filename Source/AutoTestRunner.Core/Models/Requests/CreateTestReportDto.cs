@@ -24,9 +24,6 @@ namespace AutoTestRunner.Core.Models.Requests
         public decimal TimeTakenInSecond { get; set; }
 
         [JsonPropertyName("failed_tests")]
-        public IReadOnlyList<string> FailedTests { get; set; }
-
-        [JsonPropertyName("ignored_tests")]
-        public IReadOnlyList<string> IgnoredTests { get; set; }
+        public IReadOnlyList<TestDetailRequestDto> TestDetails { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using AutoTestRunner.Core.Enums;
 
-namespace AutoTestRunner.Core.Models.Response
+namespace AutoTestRunner.Core.Models.Requests
 {
     public class TestDetailRequestDto
     {

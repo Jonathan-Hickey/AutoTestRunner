@@ -9,4 +9,9 @@ namespace AutoTestRunner.Core.Mappers.Interfaces
 
         IReadOnlyList<T_Out> Map(IEnumerable<T_In> objs) => objs.Select(Map).ToList();
     }
+
+    public interface IMapper<T_In_One, T_In_Two, T_Out>
+    {
+        T_Out Map(T_In_One objOne, T_In_Two objTwo);
+    }
 }

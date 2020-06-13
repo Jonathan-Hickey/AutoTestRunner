@@ -1,6 +1,8 @@
 ﻿using AutoTestRunner.Api.Factory.Interfaces;
 using AutoTestRunner.Api.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Models.Requests;
 
@@ -15,8 +17,8 @@ namespace AutoTestRunner.Api.Factory.Implementation
                 TestReportId = Guid.NewGuid(),
                 ProjectWatcherId = projectWatcherId,
                 RunDateTime = DateTimeOffset.Now,
-                TestSummary = CreateTestSummary(request)
-
+                TestSummary = CreateTestSummary(request),
+                TestDetails = CreateTestDetails(request.TestDetails)
             };
         }
 
@@ -32,6 +34,18 @@ namespace AutoTestRunner.Api.Factory.Implementation
                 NumberOfFailedTests = request.NumberOfFailedTests,
                 NumberOfIgnoredTests = request.NumberOfIgnoredTests,
             };
+        }
+
+        private IReadOnlyList<TestDetail> CreateTestDetails(IReadOnlyList<TestDetailRequestDto> testDetails)
+        {
+            return testDetails.Select(t => 
+                new TestDetail
+                {
+                    TestName = t.TestName,
+                    TimeTakenInMs = t.TimeTakenInMilliseconds,
+                    TestStatus = t.TestStatus
+                })
+                .ToList();
         }
     }
 }

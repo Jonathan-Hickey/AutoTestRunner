@@ -10,19 +10,22 @@ namespace AutoTestRunner.Worker.Services.Implementation
     {
         private readonly ILogger<TestRunnerService> _logger;
         private readonly ICommandLineService _commandLineService;
-        private readonly IMessageParser _messageParser;
         private readonly IAutoTestRunnerClient _autoTestRunnerClient;
         private readonly IWindowsNotificationService _windowsNotificationService;
+        private readonly ITestSummaryParser _testSummaryParser;
+        private readonly ITestDetailParser _testDetailParser;
 
         public TestRunnerService(ILogger<TestRunnerService> logger,
             ICommandLineService commandLineService,
-            IMessageParser messageParser,
+            ITestSummaryParser testSummaryParser,
             IAutoTestRunnerClient autoTestRunnerClient,
+            ITestDetailParser testDetailParser,
             IWindowsNotificationService windowsNotificationService)
         {
+            _testDetailParser = testDetailParser;
+            _testSummaryParser = testSummaryParser;
             _windowsNotificationService = windowsNotificationService;
             _autoTestRunnerClient = autoTestRunnerClient;
-            _messageParser = messageParser;
             _commandLineService = commandLineService;
             _logger = logger;
         }
@@ -34,12 +37,13 @@ namespace AutoTestRunner.Worker.Services.Implementation
             var projectPath = Path.Combine(fullPathWithFileNameRemoved, "..", "..", "..");
 
             var testResultMessage = _commandLineService.RunTestProject(projectPath);
-            var messageResult = _messageParser.GetTestResult(testResultMessage);
+            
+            var testSummary = _testSummaryParser.CreateTestSummary(testResultMessage);
+            var testDetails =  _testDetailParser.CreateTestDetails(testResultMessage);
 
+            var reportId = _autoTestRunnerClient.CreateTestReport(projectWatcherId, testSummary, testDetails);
 
-            var reportId = _autoTestRunnerClient.CreateTestReport(projectWatcherId, messageResult);
-
-            _windowsNotificationService.Push(projectWatcherId: projectWatcherId, reportId: reportId, messageResult);
+            _windowsNotificationService.Push(projectWatcherId: projectWatcherId, reportId: reportId, testSummary);
         }
     }
 }
