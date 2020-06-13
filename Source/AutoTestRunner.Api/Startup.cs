@@ -24,6 +24,8 @@ namespace AutoTestRunner.Api
 
             services.AddResponseCaching();
 
+            services.InitBsonMappers();
+
             services.AddServices();
             services.AddRepositories();
             services.AddFactories();

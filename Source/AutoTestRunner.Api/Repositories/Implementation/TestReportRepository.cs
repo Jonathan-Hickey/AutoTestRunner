@@ -5,7 +5,6 @@ using AutoTestRunner.Api.Models;
 using AutoTestRunner.Api.Repositories.Interfaces;
 using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Repositories.Interfaces;
-using LiteDB;
 
 namespace AutoTestRunner.Api.Repositories.Implementation
 {
@@ -48,17 +47,6 @@ namespace AutoTestRunner.Api.Repositories.Implementation
         {
             using (var db = _connectionFactory.CreateConnection())
             {
-                BsonMapper.Global.Entity<TestSummary>()
-                    .Id(c => c.TestSummaryReportId);
-
-                BsonMapper.Global.Entity<TestDetail>()
-                    .Id(t => t.TestDetailId);
-
-                BsonMapper.Global.Entity<TestReport>()
-                    .Id(c => c.TestReportId)
-                    .DbRef(e => e.TestSummary, "TestSummary")
-                    .DbRef(e => e.TestDetails, "TestDetail");
-
                 var testSummaries = db.GetCollection<TestSummary>();
                 testSummaries.EnsureIndex(s => s.TestSummaryReportId);
                 testSummaries.Insert(testReport.TestSummary);
@@ -71,6 +59,32 @@ namespace AutoTestRunner.Api.Repositories.Implementation
 
                 testReports.EnsureIndex(p => p.TestReportId);
                 testReports.Insert(testReport);
+            }
+        }
+
+        public void DeleteTestReports(Guid projectWatcherId)
+        {
+            var testReportsToDelete = GetTestReports(projectWatcherId);
+
+            using (var db = _connectionFactory.CreateConnection())
+            {
+
+                var testReports = db.GetCollection<TestReport>();
+                var testSummaries = db.GetCollection<TestSummary>();
+                var testDetails = db.GetCollection<TestDetail>();
+
+
+                foreach (var testReport in testReportsToDelete)
+                {
+                    testSummaries.Delete(testReport.TestSummary.TestSummaryReportId);
+
+                    foreach (var testDetail in testReport.TestDetails)
+                    {
+                        testDetails.Delete(testDetail.TestDetailId);
+                    }
+
+                    testReports.Delete(testReport.TestReportId);
+                }
             }
         }
     }

@@ -54,5 +54,19 @@ namespace AutoTestRunner.Core.Repositories.Implementation
                     .SingleOrDefault();
             }
         }
+
+        public void DeleteProjectWatcher(Guid projectWatcherId)
+        {
+            using (var db = _connectionFactory.CreateConnection())
+            {
+                var successfullyDeleted = db.GetCollection<ProjectWatcher>().Delete(projectWatcherId);
+
+                if (!successfullyDeleted)
+                {
+                    throw new Exception("Unable to delete");
+                }
+
+            }
+        }
     }
 }

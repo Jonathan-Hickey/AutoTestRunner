@@ -68,5 +68,21 @@ namespace AutoTestRunner.Api.Controllers
 
             return Ok(watchedProjectDto);
         }
+
+        [HttpDelete]
+        [Route("{projectWatcherId}")]
+        public IActionResult DeleteProjectWatcher(Guid projectWatcherId)
+        {
+            var watchedProject = _projectWatcherService.GetWatchedProject(projectWatcherId);
+
+            if (watchedProject == null)
+            {
+                return NotFound();
+            }
+
+            _projectWatcherService.DeleteWatchedProject(projectWatcherId);
+
+            return Accepted();
+        }
     }
 }

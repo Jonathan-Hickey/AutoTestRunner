@@ -46,7 +46,7 @@ export class ReportDetailComponent {
   private clickedIndex : number;
 
   // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
+  public chartClicked({ event, active }: { event: MouseEvent, active: any }): void {
     console.log(event, active);
 
     if (active !== null && active[0] !== null && active !== undefined && active[0] !== undefined ) {

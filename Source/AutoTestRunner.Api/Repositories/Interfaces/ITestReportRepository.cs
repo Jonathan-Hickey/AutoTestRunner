@@ -11,5 +11,7 @@ namespace AutoTestRunner.Api.Repositories.Interfaces
         IReadOnlyList<TestReport> GetTestReports(Guid projectWatcherId);
 
         void AddTestReport(TestReport testReport);
+
+        void DeleteTestReports(Guid projectWatcherId);
     }
 }

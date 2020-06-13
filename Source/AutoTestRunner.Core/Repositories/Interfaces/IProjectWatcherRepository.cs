@@ -13,5 +13,8 @@ namespace AutoTestRunner.Core.Repositories.Interfaces
         IReadOnlyList<ProjectWatcher> GetProjectWatchers();
         
         ProjectWatcher GetProjectWatcher(string fullPathHash);
+
+
+        void DeleteProjectWatcher(Guid projectWatcherId);
     }
 }

@@ -3,6 +3,7 @@ using AutoTestRunner.Core.Models;
 using AutoTestRunner.Core.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using AutoTestRunner.Api.Repositories.Interfaces;
 
 namespace AutoTestRunner.Api.Services.Implementation
 {
@@ -10,9 +11,13 @@ namespace AutoTestRunner.Api.Services.Implementation
     {
         private readonly IHashService _service;
         private readonly IProjectWatcherRepository _projectWatcherRepository;
+        private readonly ITestReportRepository _testReportRepository;
 
-        public ProjectWatcherService(IHashService service, IProjectWatcherRepository projectWatcherRepository)
+        public ProjectWatcherService(IHashService service, 
+            IProjectWatcherRepository projectWatcherRepository,
+            ITestReportRepository testReportRepository)
         {
+            _testReportRepository = testReportRepository;
             _projectWatcherRepository = projectWatcherRepository;
             _service = service;
         }
@@ -53,6 +58,12 @@ namespace AutoTestRunner.Api.Services.Implementation
         public ProjectWatcher GetWatchedProject(Guid projectWatcherId)
         {
             return _projectWatcherRepository.GetProjectWatcher(projectWatcherId);
+        }
+
+        public void DeleteWatchedProject(Guid projectWatcherId)
+        {
+            _projectWatcherRepository.DeleteProjectWatcher(projectWatcherId);
+            _testReportRepository.DeleteTestReports(projectWatcherId);
         }
 
         private ProjectWatcher GetWatchedProject(string fullProjectPathHash)

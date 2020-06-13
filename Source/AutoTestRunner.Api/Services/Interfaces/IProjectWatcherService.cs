@@ -9,5 +9,6 @@ namespace AutoTestRunner.Api.Services.Interfaces
         ProjectWatcher AddProjectToWatcher(string fullPath); 
         IReadOnlyList<ProjectWatcher> GetWatchedProjects();
         ProjectWatcher GetWatchedProject(Guid projectWatcherId);
+        void DeleteWatchedProject(Guid projectWatcherId);
     }
 }
