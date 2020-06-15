@@ -1,21 +1,36 @@
-<h1 id="tableLabel" class="textcenter">All Projects</h1>
+<div class="container">
 
-<p *ngIf="!projects"><em>Loading...</em></p>
+  <div class="row">
 
-<table class='table table-hover table-dark' aria-labelledby="tableLabel" *ngIf="projects">
-  <thead>
-    <tr>
-      <th class="textcenter"> Project Name </th>
-      <th class="textcenter"> File Path </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let project of projects" class="clickable" routerLink="/projects/{{project.project_watcher_id}}/reports">
-      <td class="textcenter"> {{ project.file_to_watch }} </td>
-      <td> {{ project.project_watch_path }} </td>
+    <div class="">
 
-      <!--TODO need to add options to delete and update path-->
-      <!--Good link for UI icons https://getbootstrap.com/docs/3.3/components/-->
-    </tr>
-  </tbody>
-</table>
+      <h1 id="tableLabel" class="textcenter">All Projects</h1>
+
+      <p *ngIf="!projects">
+        <em>Loading...</em>
+      </p>
+
+      <div class="table-responsive">
+        <table class="table table-hover table-dark" aria-labelledby="tableLabel" *ngIf="projects">
+          <thead>
+          <tr>
+            <th class="textcenter" style="width: 20%"> Project Name </th>
+            <th class=""> File Path </th>
+            <th class="textcenter" style="width: 10%"> Actions </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let project of projects" class="clickable">
+            <td class="textcenter" routerLink="/projects/{{project.project_watcher_id}}/reports"> {{ project.file_to_watch }} </td>
+            <td routerLink="/projects/{{project.project_watcher_id}}/reports"><span>{{ project.project_watch_path }}</span>  </td>
+            <td class="textcenter">
+              <fa-icon aria-hidden="true" style="color: white" (click)="deleteProject(project.project_watcher_id)" [icon]="faTrash"> hello world</fa-icon>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

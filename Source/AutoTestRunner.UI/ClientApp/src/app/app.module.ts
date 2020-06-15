@@ -13,6 +13,8 @@ import { ReportsComponent } from './reports/reports.component';
 import { ReportDetailComponent } from "./reports/report-detail/report-detail.component";
 import { AddProjectComponent } from "./projects/add-project/add-project.component";
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+
 import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
@@ -30,7 +32,8 @@ import { ChartsModule } from 'ng2-charts';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
-    ChartsModule
+    ChartsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

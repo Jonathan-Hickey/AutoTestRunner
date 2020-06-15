@@ -11,10 +11,12 @@ import { MultiDataSet, Label, Color } from 'ng2-charts';
 })
 
 export class ReportDetailComponent {
-  public report: IReport;
 
+  public report: IReport;
   public doughnutChartLabels: Label[] = ['Passed', 'Ignored', 'Failed',];
   public doughnutChartData: MultiDataSet = null;
+  public chartType: ChartType = 'doughnut';
+  public chartLegend = true;
 
   public colors: Color[] = [
     {
@@ -45,7 +47,19 @@ export class ReportDetailComponent {
   public testDetailsTableHeader: string;
   private clickedIndex : number;
 
-  // events
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private route: ActivatedRoute) {
+
+    let projectId = this.route.snapshot.params['project_id'];
+    let reportId = this.route.snapshot.params['report_id'];
+
+    http.get<IReport>(baseUrl + 'ProjectWatcher/' + projectId + '/TestReports/' + reportId).subscribe(result => {
+      this.report = result;
+
+      this.doughnutChartData = [[this.report.test_summary.number_of_passed_tests, this.report.test_summary.number_of_ignored_tests, this.report.test_summary.number_of_failed_tests]];
+    }, error => console.error(error));
+  }
+
+
   public chartClicked({ event, active }: { event: MouseEvent, active: any }): void {
     console.log(event, active);
 
@@ -68,20 +82,4 @@ export class ReportDetailComponent {
       this.testDetails = null;
     }
   }
-
-  public chartType: ChartType = 'doughnut';
-  public chartLegend = true;
-
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private route: ActivatedRoute) {
-
-    let projectId = this.route.snapshot.params['project_id'];
-    let reportId = this.route.snapshot.params['report_id'];
-
-    http.get<IReport>(baseUrl + 'ProjectWatcher/' + projectId + '/TestReports/' + reportId).subscribe(result => {
-      this.report = result;
-
-      this.doughnutChartData = [[this.report.test_summary.number_of_passed_tests, this.report.test_summary.number_of_ignored_tests, this.report.test_summary.number_of_failed_tests]];
-    }, error => console.error(error));
-  }
 }
-

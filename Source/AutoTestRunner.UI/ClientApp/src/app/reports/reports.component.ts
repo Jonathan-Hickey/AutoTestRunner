@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router'
 
@@ -7,19 +7,25 @@ import { ActivatedRoute } from '@angular/router'
   templateUrl: './reports.component.html',
 })
 
-export class ReportsComponent {
+export class ReportsComponent implements OnInit {
+  
   public reports: IReport[];
   public project_name: string;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private route: ActivatedRoute) {
+  }
 
+  ngOnInit(): void {
     let projectId = this.route.snapshot.params['project_id'];
 
-    http.get<IReport[]>(baseUrl + 'ProjectWatcher/' + projectId +'/TestReports').subscribe(results => {
+    this.http.get<IReport[]>(this.baseUrl + 'ProjectWatcher/' + projectId + '/TestReports').subscribe(results => {
       this.reports = results;
-      this.project_name = this.reports[0].test_summary.project_name;
+      if (this.reports.length > 0) {
+        this.project_name = this.reports[0].test_summary.project_name;
+      }
     }, error => console.error(error));
   }
+
 }
 
 export interface IReport {
