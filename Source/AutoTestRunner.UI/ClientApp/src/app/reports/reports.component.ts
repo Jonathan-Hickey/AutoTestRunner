@@ -25,7 +25,6 @@ export class ReportsComponent implements OnInit {
       }
     }, error => console.error(error));
   }
-
 }
 
 export interface IReport {

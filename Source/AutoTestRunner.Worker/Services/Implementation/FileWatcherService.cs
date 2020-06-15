@@ -41,7 +41,7 @@ namespace AutoTestRunner.Worker.Services.Implementation
         {
             var myApplicationId = Guid.NewGuid();
 
-            var projectWatcherFileWatcher = new CustomFileWatcher(_memoryCache, myApplicationId, _appDataService.GetAutoTestRunnerDataFolderPath(), _appDataService.GetProjectWatcherFileName());
+            var projectWatcherFileWatcher = new CustomFileWatcher(_memoryCache, myApplicationId, _appDataService.GetAutoTestRunnerDataFolderPath(), _appDataService.GetAutoWatcherDb());
             projectWatcherFileWatcher.OnChange = OnWatchProjectFileChanged;
             _fileWatcherLookUp.Add(myApplicationId, projectWatcherFileWatcher);
         }

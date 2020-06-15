@@ -7,26 +7,11 @@ namespace AutoTestRunner.Core.Services.Implementation
     public class AppDataService : IAppDataService
     {
         private static readonly string _autoTestRunnerData = "AutoTestRunnerData";
-        private static readonly string _projectWatcherFileName = "ProjectWatcher.json";
-        private static readonly string _testResultsFileName = "TestResults.json";
         private static readonly string _autoWatcherDb = "AutoWatcher.db";
 
-        public string GetProjectWatcherFileName()
+        public string GetAutoWatcherDb()
         {
-            return _projectWatcherFileName;
-        }
-
-        public string GetProjectWatcherFilePath()
-        {
-            var projectWatcherFilePath = Path.Combine(GetAutoTestRunnerDataFolderPath(), _projectWatcherFileName);
-
-            if (!File.Exists(projectWatcherFilePath))
-            {
-                var fileStream = File.Create(projectWatcherFilePath);
-                fileStream.Close();
-            }
-
-            return projectWatcherFilePath;
+            return _autoWatcherDb;
         }
 
         public string GetLiteDatabaseConnectionString()
@@ -34,19 +19,6 @@ namespace AutoTestRunner.Core.Services.Implementation
             return Path.Combine(GetAutoTestRunnerDataFolderPath(), _autoWatcherDb);
         }
 
-        public string GetTestReportFilePath()
-        {
-            var testResultsFilePath = Path.Combine(GetAutoTestRunnerDataFolderPath(), _testResultsFileName);
-
-            if (!File.Exists(testResultsFilePath))
-            {
-                var fileStream = File.Create(testResultsFilePath);
-                fileStream.Close();
-            }
-
-            return testResultsFilePath;
-        }
-        
         public string GetAutoTestRunnerDataFolderPath()
         {
             string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);

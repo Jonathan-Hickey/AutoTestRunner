@@ -2,9 +2,8 @@
 {
     public interface IAppDataService
     {
-        string GetProjectWatcherFileName();
+        string GetAutoWatcherDb();
         string GetLiteDatabaseConnectionString();
         string GetAutoTestRunnerDataFolderPath();
-
     }
 }
