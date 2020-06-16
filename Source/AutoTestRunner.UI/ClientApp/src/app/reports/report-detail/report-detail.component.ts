@@ -1,16 +1,17 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router'
 import { IReport, ITestDetail } from "../reports.component"
 import { ChartType, ChartOptions } from 'chart.js';
 import { MultiDataSet, Label, Color } from 'ng2-charts';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-report-detail',
   templateUrl: './report-detail.component.html'
 })
 
-export class ReportDetailComponent {
+export class ReportDetailComponent implements OnInit, OnDestroy  {
 
   public report: IReport;
   public doughnutChartLabels: Label[] = ['Passed', 'Ignored', 'Failed',];
@@ -47,18 +48,30 @@ export class ReportDetailComponent {
   public testDetailsTableHeader: string;
   private clickedIndex : number;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private activatedRoute: ActivatedRoute) {
 
-    let projectId = this.route.snapshot.params['project_id'];
-    let reportId = this.route.snapshot.params['report_id'];
+  }
+  //private subscriber : Observable<UrlSegment[]>;
 
-    http.get<IReport>(baseUrl + 'ProjectWatcher/' + projectId + '/TestReports/' + reportId).subscribe(result => {
-      this.report = result;
+  ngOnInit(): void {
 
-      this.doughnutChartData = [[this.report.test_summary.number_of_passed_tests, this.report.test_summary.number_of_ignored_tests, this.report.test_summary.number_of_failed_tests]];
-    }, error => console.error(error));
+    this.activatedRoute.url.subscribe(url => {
+      let projectId = this.activatedRoute.snapshot.params['project_id'];
+      console.log(projectId);
+      let reportId = this.activatedRoute.snapshot.params['report_id'];
+      console.log(reportId);
+
+      this.http.get<IReport>(this.baseUrl + 'ProjectWatcher/' + projectId + '/TestReports/' + reportId).subscribe(result => {
+        this.report = result;
+
+        this.doughnutChartData = [[this.report.test_summary.number_of_passed_tests, this.report.test_summary.number_of_ignored_tests, this.report.test_summary.number_of_failed_tests]];
+      }, error => console.error(error));
+    });
   }
 
+  ngOnDestroy(): void {
+    //this.activatedRoute.url.
+  }
 
   public chartClicked({ event, active }: { event: MouseEvent, active: any }): void {
     console.log(event, active);

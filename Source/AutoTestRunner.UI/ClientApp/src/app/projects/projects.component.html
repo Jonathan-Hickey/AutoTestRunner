@@ -13,20 +13,20 @@
       <div class="table-responsive">
         <table class="table table-hover table-dark" aria-labelledby="tableLabel" *ngIf="projects">
           <thead>
-          <tr>
-            <th class="textcenter" style="width: 20%"> Project Name </th>
-            <th class=""> File Path </th>
-            <th class="textcenter" style="width: 10%"> Actions </th>
-          </tr>
+            <tr>
+              <th class="textcenter" style="width: 20%"> Project Name </th>
+              <th class=""> File Path </th>
+              <th class="textcenter" style="width: 10%"> Actions </th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let project of projects" class="clickable">
-            <td class="textcenter" routerLink="/projects/{{project.project_watcher_id}}/reports"> {{ project.file_to_watch }} </td>
-            <td routerLink="/projects/{{project.project_watcher_id}}/reports"><span>{{ project.project_watch_path }}</span>  </td>
-            <td class="textcenter">
-              <fa-icon aria-hidden="true" style="color: white" (click)="deleteProject(project.project_watcher_id)" [icon]="faTrash"> hello world</fa-icon>
-            </td>
-          </tr>
+            <tr *ngFor="let project of projects" class="clickable">
+              <td class="textcenter" routerLink="/projects/{{project.project_watcher_id}}/reports"> {{ project.file_to_watch }} </td>
+              <td routerLink="/projects/{{project.project_watcher_id}}/reports"><span>{{ project.project_watch_path }}</span>  </td>
+              <td class="textcenter">
+                <fa-icon aria-hidden="true" style="color: white" (click)="deleteProject(project.project_watcher_id)" [icon]="faTrash"> hello world</fa-icon>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -34,3 +34,6 @@
     </div>
   </div>
 </div>
+
+
+<router-outlet></router-outlet>

@@ -12,18 +12,19 @@ export class ReportsComponent implements OnInit {
   public reports: IReport[];
   public project_name: string;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    let projectId = this.route.snapshot.params['project_id'];
-
-    this.http.get<IReport[]>(this.baseUrl + 'ProjectWatcher/' + projectId + '/TestReports').subscribe(results => {
-      this.reports = results;
-      if (this.reports.length > 0) {
-        this.project_name = this.reports[0].test_summary.project_name;
-      }
-    }, error => console.error(error));
+    this.activatedRoute.url.subscribe(url => {
+      let projectId = this.activatedRoute.snapshot.params['project_id'];
+      this.http.get<IReport[]>(this.baseUrl + 'ProjectWatcher/' + projectId + '/TestReports').subscribe(results => {
+        this.reports = results;
+        if (this.reports.length > 0) {
+          this.project_name = this.reports[0].test_summary.project_name;
+        }
+      }, error => console.error(error));
+    });
   }
 }
 
